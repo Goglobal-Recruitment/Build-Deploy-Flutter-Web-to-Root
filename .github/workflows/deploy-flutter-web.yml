@@ -36,8 +36,21 @@ jobs:
       - name: Build Flutter web
         run: flutter build web --release --base-href /Build-Deploy-Flutter-Web-to-Root/
 
-      - name: Add .nojekyll to artifact
+      - name: Ensure .nojekyll in build
         run: cp .nojekyll build/web/.nojekyll || echo "nojekyll already present"
+
+      - name: Prepare docs folder
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -r build/web/* docs/
+          cp build/web/.nojekyll docs/.nojekyll || true
+
+      - name: Commit and push docs to main
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update web build for GitHub Pages"
+          file_pattern: docs/*
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
