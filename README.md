@@ -1,5 +1,10 @@
 # Flight-Booking-App-Flutter
 
+[![Build & Deploy](https://github.com/Goglobal-Recruitment/Build-Deploy-Flutter-Web-to-Root/actions/workflows/deploy-flutter-web.yml/badge.svg)](https://github.com/Goglobal-Recruitment/Build-Deploy-Flutter-Web-to-Root/actions/workflows/deploy-flutter-web.yml)
+
+- Live site: https://go-global-recruitment.github.io/Build-Deploy-Flutter-Web-to-Root/
+- Deployed via GitHub Actions using official Pages actions.
+
 This is a Flight Ticket Booking App Built with Flutter and Dart and works on iOS, Android & Web.
 
 <p align="center">
