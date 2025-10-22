@@ -1,4 +1,4 @@
-name: Deploy Flutter Web App to Root
+name: Build & Deploy Flutter Web to Root
 
 on:
   push:
@@ -7,35 +7,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: stable
 
-      - name: Enable web
+      - name: Enable web support
         run: flutter config --enable-web
 
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build web
+      - name: Build Flutter web
         run: flutter build web --release --base-href /Build-Deploy-Flutter-Web-to-Root/
 
-      - name: Copy build to root
-        run: |
-          rm -rf *
-          cp -r build/web/* .
-
-      - name: Commit and push
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Deploy Flutter Web to root [skip ci]" || echo "No changes to commit"
-          git push
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          destination_dir: Build-Deploy-Flutter-Web-to-Root
