@@ -25,7 +25,7 @@ jobs:
         run: flutter pub get
 
       - name: Build web
-        run: flutter build web --release
+        run: flutter build web --release --base-href /Build-Deploy-Flutter-Web-to-Root/
 
       - name: Copy build to root
         run: |
