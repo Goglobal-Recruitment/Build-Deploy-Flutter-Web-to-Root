@@ -61,12 +61,17 @@ function formatDuration(duration) {
 function getRandomPrice(cabinClass) {
   if (cabinClass === 'economy') {
     return Math.floor(Math.random() * (18900 - 12500 + 1)) + 12500;
+  } else if (cabinClass === 'business') {
+    return Math.floor(Math.random() * (120000 - 85000 + 1)) + 85000;
+  } else if (cabinClass === 'first') {
+    return Math.floor(Math.random() * (142000 - 120001 + 1)) + 120001;
   } else {
-    return Math.floor(Math.random() * (142000 - 85000 + 1)) + 85000;
+    // Default to economy if no valid cabin class
+    return Math.floor(Math.random() * (18900 - 12500 + 1)) + 12500;
   }
 }
 
-// Format price with commas
+// Format price with commas for ZAR
 function formatPrice(price) {
   return 'R' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
