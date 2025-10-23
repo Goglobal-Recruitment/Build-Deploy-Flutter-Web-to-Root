@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Go Global Flights">
   <link rel="apple-touch-icon" href="../assets/images/icon-192.png">
   <link rel="icon" type="image/png" href="../assets/images/favicon.png"/>
-  <title>Go Global Flights - Static Site</title>
+  <title>Go Global Flights - South African Flight Booking</title>
   <style>
     * {
       margin: 0;
@@ -312,32 +312,66 @@
       <div class="search-tabs">
         <div class="tab active">✈️ Flights</div>
         <div class="tab">🏨 Hotels</div>
+        <div class="tab">🚗 Car Rentals</div>
       </div>
       
       <div class="search-form">
+        <div class="trip-type-row">
+          <label class="radio-container">
+            <input type="radio" name="trip-type" value="return" checked>
+            <span class="radio-label">Return</span>
+          </label>
+          <label class="radio-container">
+            <input type="radio" name="trip-type" value="one-way">
+            <span class="radio-label">One-way</span>
+          </label>
+          <label class="radio-container">
+            <input type="radio" name="trip-type" value="multi-city">
+            <span class="radio-label">Multi-city</span>
+          </label>
+        </div>
         <div class="form-row">
           <div class="form-group">
-            <label>From</label>
-            <input type="text" value="NYC" placeholder="Departure">
+            <label for="from">From</label>
+            <select id="from" required>
+              <option value="">Select departure airport</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>To</label>
-            <input type="text" value="LDN" placeholder="Destination">
+            <label for="to">To</label>
+            <select id="to" required>
+              <option value="">Select destination airport</option>
+            </select>
           </div>
         </div>
         
         <div class="form-row">
           <div class="form-group">
-            <label>Departure</label>
-            <input type="date" value="2024-01-15">
+            <label for="depart-date">Depart</label>
+            <input type="date" id="depart-date" value="2024-01-15" required>
           </div>
-          <div class="form-group">
-            <label>Return</label>
-            <input type="date" value="2024-01-22">
+          <div class="form-group" id="return-date-group">
+            <label for="return-date">Return</label>
+            <input type="date" id="return-date" value="2024-01-22">
           </div>
         </div>
         
-        <button class="search-btn">🔍 Find tickets</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="passengers">Passengers</label>
+            <input type="number" id="passengers" min="1" max="9" value="1">
+          </div>
+          <div class="form-group">
+            <label for="cabin-class">Cabin Class</label>
+            <select id="cabin-class">
+              <option value="economy">Economy (R12,500 - R18,900)</option>
+              <option value="business">Business (R85,000 - R120,000)</option>
+              <option value="first">First Class (R120,001 - R142,000)</option>
+            </select>
+          </div>
+        </div>
+        
+        <button class="search-btn" id="search-btn">🔍 Search Flights</button>
       </div>
     </div>
     
