@@ -24,6 +24,14 @@
       color: #333;
     }
     
+    /* Flight Details Screen */
+    .flight-details-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    
     .app-container {
       max-width: 400px;
       margin: 0 auto;
@@ -432,18 +440,7 @@
     </div>
   </div>
   
-  <script>
-    // Simple interactivity
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-    
-    document.querySelector('.search-btn').addEventListener('click', function() {
-      alert('Search functionality would be implemented here!');
-    });
-  </script>
+  <script src="../js/mockData.js"></script>
+  <script src="../js/app.js"></script>
 </body>
 </html>
