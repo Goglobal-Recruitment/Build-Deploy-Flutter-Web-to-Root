@@ -1,11 +1,11 @@
-# Flight-Booking-App-Flutter
+# Go Global Flights - Static Flight Booking Web App
 
 [![Build & Deploy](https://github.com/Goglobal-Recruitment/Build-Deploy-Flutter-Web-to-Root/actions/workflows/deploy-flutter-web.yml/badge.svg)](https://github.com/Goglobal-Recruitment/Build-Deploy-Flutter-Web-to-Root/actions/workflows/deploy-flutter-web.yml)
 
 - Live site: https://go-global-recruitment.github.io/Build-Deploy-Flutter-Web-to-Root/
 - Deployed via GitHub Actions using official Pages actions.
 
-This is a Flight Ticket Booking App Built with Flutter and Dart and works on iOS, Android & Web.
+A fully static flight booking web application with a Booking.com-style layout and complete multi-screen flow. This application simulates the entire flight booking process from search to confirmation without requiring any backend services.
 
 <p align="center">
 

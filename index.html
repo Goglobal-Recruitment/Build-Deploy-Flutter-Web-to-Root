@@ -24,6 +24,14 @@
       color: #333;
     }
     
+    /* Flight Details Screen */
+    .flight-details-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    
     .app-container {
       max-width: 400px;
       margin: 0 auto;
@@ -432,94 +440,7 @@
     </div>
   </div>
   
-  <script>
-    // Static Site Navigation and Interactivity
-    document.addEventListener('DOMContentLoaded', function() {
-      // Tab functionality
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-        });
-      });
-      
-      // Search functionality
-      const searchBtn = document.querySelector('.search-btn');
-      if (searchBtn) {
-        searchBtn.addEventListener('click', function() {
-          const from = document.querySelector('input[placeholder*="From"]')?.value || 'Not specified';
-          const to = document.querySelector('input[placeholder*="To"]')?.value || 'Not specified';
-          alert(`Searching flights from ${from} to ${to}. This is a static demo site.`);
-        });
-      }
-      
-      // Bottom navigation functionality
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          // Remove active class from all nav items
-          document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-          
-          // Add active class to clicked item
-          this.classList.add('active');
-          
-          // Get the screen name from the nav item
-          const screenName = this.querySelector('.nav-text')?.textContent || 'Home';
-          
-          // Show appropriate content (for demo purposes)
-          showScreen(screenName);
-        });
-      });
-      
-      // Ticket interaction
-      document.querySelectorAll('.ticket').forEach(ticket => {
-        ticket.addEventListener('click', function() {
-          this.style.transform = this.style.transform === 'scale(1.02)' ? 'scale(1)' : 'scale(1.02)';
-          this.style.transition = 'transform 0.2s ease';
-        });
-      });
-      
-      // Hotel card interaction
-      document.querySelectorAll('.hotel-card').forEach(card => {
-        card.addEventListener('click', function() {
-          const hotelName = this.querySelector('h3')?.textContent || 'Hotel';
-          alert(`Selected ${hotelName}. This is a static demo site.`);
-        });
-      });
-    });
-    
-    function showScreen(screenName) {
-      // Simple screen switching for static site demo
-      const mainContent = document.querySelector('.app-container');
-      
-      switch(screenName.toLowerCase()) {
-        case 'home':
-          // Already showing home content
-          break;
-        case 'search':
-          alert('Search screen - This would show flight search results in a full app');
-          break;
-        case 'ticket':
-          alert('Ticket screen - This would show your booked tickets in a full app');
-          break;
-        case 'profile':
-          alert('Profile screen - This would show user profile in a full app');
-          break;
-        default:
-          alert(`${screenName} screen - This is a static demo site`);
-      }
-    }
-    
-    // Add some visual feedback for interactions
-    document.addEventListener('click', function(e) {
-      if (e.target.matches('button, .btn, .search-btn')) {
-        e.target.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          e.target.style.transform = 'scale(1)';
-        }, 150);
-      }
-    });
-  </script>
+  <script src="js/mockData.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
