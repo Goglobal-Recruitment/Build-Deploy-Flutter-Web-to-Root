@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const elements = {
     // Navigation and screens
     screens: {
-      search: document.getElementById('search-screen'),
+      search: null,
       results: document.getElementById('results-screen'),
-      details: document.getElementById('flight-details-screen'),
-      passenger: document.getElementById('passenger-form-screen'),
+      details: document.getElementById('details-screen'),
+      passenger: document.getElementById('passenger-screen'),
       payment: document.getElementById('payment-screen'),
       confirmation: document.getElementById('confirmation-screen'),
-      manage: document.getElementById('manage-bookings-screen')
+      manage: null
     },
     // Form elements
     tripTypeRadios: document.querySelectorAll('input[name="trip-type"]'),
@@ -39,12 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     passengersInput: document.getElementById('passengers'),
     searchBtn: document.getElementById('search-btn'),
     // Results elements
-    resultsContainer: document.getElementById('results-container'),
+    resultsContainer: document.getElementById('flights-container'),
     sortSelect: document.getElementById('sort-by'),
-    priceFilterRange: document.getElementById('price-filter'),
-    priceFilterValue: document.getElementById('price-filter-value'),
+    priceFilterRange: document.getElementById('price-slider'),
+    priceFilterMinLabel: document.getElementById('min-price'),
+    priceFilterMaxLabel: document.getElementById('max-price'),
     // Progress steps
-    progressSteps: document.querySelectorAll('.progress-step')
+    progressSteps: document.querySelectorAll('.step')
   };
 
   // Initialize the application
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize price filter
     updatePriceFilterRange();
     
-    // Show search screen
+    // Show search screen (no container to toggle)
     switchScreen('search');
   }
 
@@ -136,19 +137,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update price filter range based on cabin class
   function updatePriceFilterRange() {
     const priceRange = elements.priceFilterRange;
-    const priceValue = elements.priceFilterValue;
     
     if (state.cabinClass === 'economy') {
       priceRange.min = 12500;
       priceRange.max = 18900;
       priceRange.value = 18900;
-    } else {
+      if (elements.priceFilterMinLabel) elements.priceFilterMinLabel.textContent = formatPrice(12500);
+      if (elements.priceFilterMaxLabel) elements.priceFilterMaxLabel.textContent = formatPrice(18900);
+    } else if (state.cabinClass === 'business') {
       priceRange.min = 85000;
+      priceRange.max = 120000;
+      priceRange.value = 120000;
+      if (elements.priceFilterMinLabel) elements.priceFilterMinLabel.textContent = formatPrice(85000);
+      if (elements.priceFilterMaxLabel) elements.priceFilterMaxLabel.textContent = formatPrice(120000);
+    } else {
+      priceRange.min = 120001;
       priceRange.max = 142000;
       priceRange.value = 142000;
+      if (elements.priceFilterMinLabel) elements.priceFilterMinLabel.textContent = formatPrice(120001);
+      if (elements.priceFilterMaxLabel) elements.priceFilterMaxLabel.textContent = formatPrice(142000);
     }
-    
-    priceValue.textContent = formatPrice(priceRange.value);
   }
 
   // Handle search
@@ -616,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (screen) screen.style.display = 'none';
     });
     
-    // Show the selected screen
+    // Show the selected screen if it exists
     if (elements.screens[screenName]) {
       elements.screens[screenName].style.display = 'block';
       
@@ -651,20 +659,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortedFlights = [...state.searchResults];
     
     switch (sortBy) {
-      case 'price-asc':
+      case 'price':
         sortedFlights.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
         sortedFlights.sort((a, b) => b.price - a.price);
         break;
-      case 'duration-asc':
+      case 'duration':
         sortedFlights.sort((a, b) => {
           const durationA = a.duration.hours * 60 + a.duration.minutes;
           const durationB = b.duration.hours * 60 + b.duration.minutes;
           return durationA - durationB;
         });
         break;
-      case 'stops-asc':
+      case 'stops':
         sortedFlights.sort((a, b) => a.stops.count - b.stops.count);
         break;
     }
