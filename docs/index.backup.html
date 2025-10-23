@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Go Global Flights - Flight Ticket Booking App">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Go Global Flights">
+  <link rel="apple-touch-icon" href="../assets/images/icon-192.png">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png"/>
+  <title>Go Global Flights - Static Site</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    
+    .app-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #f8f9fa;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 20px 30px;
+      color: white;
+    }
+    
+    .greeting {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 5px;
+    }
+    
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .profile-pic {
+      position: absolute;
+      top: 40px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    .search-section {
+      padding: 20px;
+      background: white;
+      margin: -20px 20px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .search-tabs {
+      display: flex;
+      background: #f1f3f4;
+      border-radius: 25px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      border-radius: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .tab.active {
+      background: #667eea;
+      color: white;
+    }
+    
+    .search-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .form-group {
+      flex: 1;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    
+    .search-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin: 30px 0 15px;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .view-all {
+      color: #667eea;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    
+    .tickets-container {
+      padding: 0 20px;
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+    }
+    
+    .ticket {
+      min-width: 300px;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .ticket-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+    }
+    
+    .route {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .airport {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .flight-icon {
+      font-size: 20px;
+    }
+    
+    .flight-details {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .ticket-body {
+      padding: 20px;
+    }
+    
+    .price {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+      text-align: center;
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-items {
+      display: flex;
+      justify-content: space-around;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: #666;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    
+    .nav-item.active {
+      color: #667eea;
+    }
+    
+    .nav-icon {
+      font-size: 20px;
+    }
+    
+    .hotels-container {
+      padding: 0 20px 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    
+    .hotel-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .hotel-image {
+      height: 120px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+    
+    .hotel-info {
+      padding: 15px;
+    }
+    
+    .hotel-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .hotel-location {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .hotel-price {
+      color: #667eea;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="profile-pic">👤</div>
+      <div class="greeting">Good morning</div>
+      <div class="title">Book Tickets</div>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-tabs">
+        <div class="tab active">✈️ Flights</div>
+        <div class="tab">🏨 Hotels</div>
+      </div>
+      
+      <div class="search-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>From</label>
+            <input type="text" value="NYC" placeholder="Departure">
+          </div>
+          <div class="form-group">
+            <label>To</label>
+            <input type="text" value="LDN" placeholder="Destination">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Departure</label>
+            <input type="date" value="2024-01-15">
+          </div>
+          <div class="form-group">
+            <label>Return</label>
+            <input type="date" value="2024-01-22">
+          </div>
+        </div>
+        
+        <button class="search-btn">🔍 Find tickets</button>
+      </div>
+    </div>
+    
+    <div class="section-header">
+      <div class="section-title">Upcoming flights</div>
+      <a href="#" class="view-all">View all</a>
+    </div>
+    
+    <div class="tickets-container">
+      <div class="ticket">
+        <div class="ticket-header">
+          <div class="route">
+            <div class="airport">NYC</div>
+            <div class="flight-icon">✈️</div>
+            <div class="airport">LDN</div>
+          </div>
+          <div class="flight-details">
+            <div>New York</div>
+            <div>8H 30M</div>
+            <div>London</div>
+          </div>
+        </div>
+        <div class="ticket-body">
+          <div class="price">$629</div>
+        </div>
+      </div>
+      
+      <div class="ticket">
+        <div class="ticket-header">
+          <div class="route">
+            <div class="airport">DK</div>
+            <div class="flight-icon">✈️</div>
+            <div class="airport">SH</div>
+          </div>
+          <div class="flight-details">
+            <div>Dhaka</div>
+            <div>4H 20M</div>
+            <div>Shanghai</div>
+          </div>
+        </div>
+        <div class="ticket-body">
+          <div class="price">$459</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-header">
+      <div class="section-title">Hotels</div>
+      <a href="#" class="view-all">View all</a>
+    </div>
+    
+    <div class="hotels-container">
+      <div class="hotel-card">
+        <div class="hotel-image">🏨</div>
+        <div class="hotel-info">
+          <div class="hotel-name">Open Space</div>
+          <div class="hotel-location">London</div>
+          <div class="hotel-price">$25/night</div>
+        </div>
+      </div>
+      
+      <div class="hotel-card">
+        <div class="hotel-image">🏨</div>
+        <div class="hotel-info">
+          <div class="hotel-name">Global Will</div>
+          <div class="hotel-location">London</div>
+          <div class="hotel-price">$40/night</div>
+        </div>
+      </div>
+      
+      <div class="hotel-card">
+        <div class="hotel-image">🏨</div>
+        <div class="hotel-info">
+          <div class="hotel-name">Tallest Building</div>
+          <div class="hotel-location">Dubai</div>
+          <div class="hotel-price">$68/night</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bottom-nav">
+      <div class="nav-items">
+        <a href="#" class="nav-item active">
+          <div class="nav-icon">🏠</div>
+          <div>Home</div>
+        </a>
+        <a href="#" class="nav-item">
+          <div class="nav-icon">🔍</div>
+          <div>Search</div>
+        </a>
+        <a href="#" class="nav-item">
+          <div class="nav-icon">🎫</div>
+          <div>Tickets</div>
+        </a>
+        <a href="#" class="nav-item">
+          <div class="nav-icon">👤</div>
+          <div>Profile</div>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Simple interactivity
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    
+    document.querySelector('.search-btn').addEventListener('click', function() {
+      alert('Search functionality would be implemented here!');
+    });
+  </script>
+</body>
+</html>
