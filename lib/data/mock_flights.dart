@@ -1,4 +1,4 @@
-// Mock flight data with realistic routes and pricing
+// Mock flight data with realistic routes and pricing in South African Rands (ZAR)
 // This file contains sample flight data for demonstration purposes
 
 class MockFlights {
@@ -30,7 +30,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 450.00,
+          'price': 8500.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -38,7 +38,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 550.00,
+          'price': 12500.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -46,7 +46,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 750.00,
+          'price': 18500.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -82,7 +82,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 420.00,
+          'price': 8200.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -90,7 +90,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 520.00,
+          'price': 11200.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -98,7 +98,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 720.00,
+          'price': 17200.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -134,7 +134,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 380.00,
+          'price': 7800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -142,7 +142,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 480.00,
+          'price': 10800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -150,7 +150,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 680.00,
+          'price': 16800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -186,7 +186,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 410.00,
+          'price': 8100.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -194,7 +194,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 510.00,
+          'price': 11100.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -202,7 +202,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 710.00,
+          'price': 17100.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -238,7 +238,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 390.00,
+          'price': 7900.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -246,7 +246,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 490.00,
+          'price': 10900.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -254,7 +254,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 690.00,
+          'price': 16900.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -290,7 +290,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 520.00,
+          'price': 9200.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -298,7 +298,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 620.00,
+          'price': 13200.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -306,7 +306,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 820.00,
+          'price': 19200.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -342,7 +342,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 280.00,
+          'price': 6800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -350,7 +350,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 380.00,
+          'price': 8800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -358,7 +358,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 580.00,
+          'price': 14800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -404,7 +404,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 480.00,
+          'price': 8800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -412,7 +412,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 580.00,
+          'price': 11800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -420,7 +420,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 780.00,
+          'price': 17800.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -456,7 +456,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 510.00,
+          'price': 9100.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -464,7 +464,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 610.00,
+          'price': 12100.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -472,7 +472,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 810.00,
+          'price': 18100.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,
@@ -508,7 +508,7 @@ class MockFlights {
       'fareOptions': [
         {
           'type': 'Light',
-          'price': 290.00,
+          'price': 6900.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 0,
           'isRefundable': false,
@@ -516,7 +516,7 @@ class MockFlights {
         },
         {
           'type': 'Standard',
-          'price': 390.00,
+          'price': 8900.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 20,
           'isRefundable': false,
@@ -524,7 +524,7 @@ class MockFlights {
         },
         {
           'type': 'Flex',
-          'price': 590.00,
+          'price': 14900.00,
           'cabinClass': 'Economy',
           'baggageAllowance': 30,
           'isRefundable': true,

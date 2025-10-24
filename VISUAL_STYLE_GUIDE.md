@@ -337,4 +337,27 @@ Container(
 )
 ```
 
+### Price Display Component
+```dart
+// lib/widgets/price_display.dart
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    if (label != null)
+      Text(
+        label!,
+        style: Styles.headLineStyle4,
+      ),
+    Text(
+      'R${price.toStringAsFixed(2)}',
+      style: TextStyle(
+        fontSize: isLarge ? 24 : 18,
+        fontWeight: FontWeight.bold,
+        color: color ?? Styles.primaryColor,
+      ),
+    ),
+  ],
+)
+```
+
 This visual style guide ensures a consistent, professional appearance across all screens of the SkyQuest Flight Booking application, creating a cohesive user experience that matches the quality and feel of the main page.

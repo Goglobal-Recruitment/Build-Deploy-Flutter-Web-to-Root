@@ -34,7 +34,7 @@ class InvoiceGenerator {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Invoice - \$bookingReference</title>
+    <title>Invoice - $bookingReference</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -199,11 +199,11 @@ class InvoiceGenerator {
         <div class="booking-info">
             <div>
                 <h3>BOOKING REFERENCE</h3>
-                <p>\$bookingReference</p>
+                <p>$bookingReference</p>
             </div>
             <div>
                 <h3>BOOKING DATE</h3>
-                <p>\$bookingDate</p>
+                <p>$bookingDate</p>
             </div>
             <div>
                 <h3>STATUS</h3>
@@ -216,21 +216,21 @@ class InvoiceGenerator {
                 <h2>Flight Details</h2>
                 <div class="flight-details">
                     <div class="flight-segment">
-                        <div class="time">\$departureTime</div>
-                        <div class="code">\$originCode</div>
+                        <div class="time">$departureTime</div>
+                        <div class="code">$originCode</div>
                     </div>
                     <div class="flight-duration">
-                        <div>\$duration</div>
+                        <div>$duration</div>
                         <div class="flight-icon">✈️</div>
                         <div>Direct</div>
                     </div>
                     <div class="flight-segment">
-                        <div class="time">\$arrivalTime</div>
-                        <div class="code">\$destinationCode</div>
+                        <div class="time">$arrivalTime</div>
+                        <div class="code">$destinationCode</div>
                     </div>
                 </div>
                 <div class="flight-airline">
-                    \$airlineName • \$flightNumber
+                    $airlineName • $flightNumber
                 </div>
             </div>
             
@@ -246,7 +246,7 @@ class InvoiceGenerator {
                         </tr>
                     </thead>
                     <tbody>
-                        \$passengerRows
+                        $passengerRows
                     </tbody>
                 </table>
             </div>
@@ -255,24 +255,24 @@ class InvoiceGenerator {
                 <h2>Price Breakdown</h2>
                 <div class="price-breakdown">
                     <div class="price-row">
-                        <span>Flight Fare (\$fareType)</span>
-                        <span>\$${farePrice.toStringAsFixed(2)}</span>
+                        <span>Flight Fare ($fareType)</span>
+                        <span>R${farePrice.toStringAsFixed(2)}</span>
                     </div>
                     <div class="price-row">
                         <span>Passengers</span>
-                        <span>\$passengerCount</span>
+                        <span>$passengerCount</span>
                     </div>
                     <div class="price-row">
                         <span>Subtotal</span>
-                        <span>\$${subtotal.toStringAsFixed(2)}</span>
+                        <span>R${subtotal.toStringAsFixed(2)}</span>
                     </div>
                     <div class="price-row">
                         <span>Taxes & Fees (15%)</span>
-                        <span>\$${taxes.toStringAsFixed(2)}</span>
+                        <span>R${taxes.toStringAsFixed(2)}</span>
                     </div>
                     <div class="price-row total">
                         <span>Total</span>
-                        <span>\$${total.toStringAsFixed(2)}</span>
+                        <span>R${total.toStringAsFixed(2)}</span>
                     </div>
                 </div>
             </div>

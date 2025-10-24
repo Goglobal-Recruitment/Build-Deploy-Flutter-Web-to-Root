@@ -27,7 +27,7 @@ class PriceDisplay extends StatelessWidget {
             style: Styles.headLineStyle4,
           ),
         Text(
-          '\$${price.toStringAsFixed(2)}',
+          'R${price.toStringAsFixed(2)}',
           style: TextStyle(
             fontSize: isLarge ? 24 : 18,
             fontWeight: FontWeight.bold,

@@ -41,7 +41,7 @@ class FlightService {
         .toList();
   }
 
-  // Generate mock flights
+  // Generate mock flights with ZAR pricing
   List<Flight> generateMockFlights({
     required String originCode,
     required String destinationCode,
@@ -129,11 +129,11 @@ class FlightService {
         }
       }
 
-      // Generate fare options
+      // Generate fare options in ZAR (South African Rands)
       final List<FareOption> fareOptions = [
         FareOption(
           type: 'Light',
-          price: 100.0 + (totalDuration * 0.5) + random.nextDouble() * 500,
+          price: 800.0 + (totalDuration * 8.0) + random.nextDouble() * 5000,
           cabinClass: 'Economy',
           baggageAllowance: 0,
           isRefundable: false,
@@ -141,7 +141,7 @@ class FlightService {
         ),
         FareOption(
           type: 'Standard',
-          price: 150.0 + (totalDuration * 0.7) + random.nextDouble() * 600,
+          price: 1200.0 + (totalDuration * 12.0) + random.nextDouble() * 7000,
           cabinClass: 'Economy',
           baggageAllowance: 20,
           isRefundable: false,
@@ -149,7 +149,7 @@ class FlightService {
         ),
         FareOption(
           type: 'Flex',
-          price: 250.0 + (totalDuration * 1.0) + random.nextDouble() * 800,
+          price: 2000.0 + (totalDuration * 20.0) + random.nextDouble() * 10000,
           cabinClass: 'Economy',
           baggageAllowance: 30,
           isRefundable: true,
