@@ -2,7 +2,6 @@ import 'package:booktickets/models/flight.dart';
 import 'package:booktickets/utils/app_layout.dart';
 import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/widgets/badge_widget.dart';
-import 'package:booktickets/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -18,111 +17,118 @@ class FlightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomCard(
-      child: InkWell(
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.all(AppLayout.getHeight(10)),
+        padding: EdgeInsets.all(AppLayout.getHeight(15)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 5,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Badge
-            BadgeWidget(
-              text: flight.badgeType,
-              color: _getBadgeColor(flight.badgeType),
-            ),
+            // Badge if applicable
+            if (flight.badgeType != null)
+              BadgeWidget(
+                text: flight.badgeType!,
+                color: flight.badgeType == 'DIRECT'
+                    ? Styles.successColor
+                    : flight.badgeType == 'FASTEST'
+                        ? Styles.warningColor
+                        : Styles.primaryColor,
+              ),
             Gap(AppLayout.getHeight(10)),
             
-            // Flight info
+            // Flight details
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  flight.departureTime.formatTime(),
-                  style: Styles.headLineStyle1,
+                // Departure time and airport
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      flight.departureTime.formatTime(),
+                      style: Styles.headLineStyle1,
+                    ),
+                    Text(
+                      flight.originCode,
+                      style: Styles.headLineStyle3,
+                    ),
+                  ],
                 ),
+                
+                // Duration and flight icon
                 Column(
                   children: [
                     Text(
                       '${flight.duration ~/ 60}h ${flight.duration % 60}m',
                       style: Styles.headLineStyle4,
                     ),
+                    Gap(AppLayout.getHeight(5)),
                     const Icon(
                       Icons.flight_takeoff,
-                      size: 20,
-                      color: Colors.grey,
+                      color: Colors.blue,
+                      size: 24,
+                    ),
+                    Gap(AppLayout.getHeight(5)),
+                    Text(
+                      flight.stops == 0 
+                        ? 'Direct' 
+                        : '${flight.stops} stop${flight.stops > 1 ? 's' : ''}',
+                      style: Styles.headLineStyle4,
                     ),
                   ],
                 ),
-                Text(
-                  flight.arrivalTime.formatTime(),
-                  style: Styles.headLineStyle1,
+                
+                // Arrival time and airport
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      flight.arrivalTime.formatTime(),
+                      style: Styles.headLineStyle1,
+                    ),
+                    Text(
+                      flight.destinationCode,
+                      style: Styles.headLineStyle3,
+                    ),
+                  ],
                 ),
               ],
             ),
-            Gap(AppLayout.getHeight(5)),
             
-            // Route
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  flight.originCode,
-                  style: Styles.headLineStyle3,
-                ),
-                const Expanded(
-                  child: Divider(
-                    color: Colors.grey,
-                    thickness: 1,
-                  ),
-                ),
-                Text(
-                  flight.destinationCode,
-                  style: Styles.headLineStyle3,
-                ),
-              ],
-            ),
-            Gap(AppLayout.getHeight(10)),
+            Gap(AppLayout.getHeight(15)),
             
             // Airline and flight number
-            Text(
-              '${flight.airlineName} • ${flight.flightNumber}',
-              style: Styles.headLineStyle4,
-            ),
-            Gap(AppLayout.getHeight(10)),
-            
-            // Best price
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'From \$${flight.bestPrice.toStringAsFixed(2)}',
+                  '${flight.airlineName} • ${flight.flightNumber}',
+                  style: Styles.headLineStyle3,
+                ),
+                // Best price
+                Text(
+                  'From R${flight.bestPrice.toStringAsFixed(2)}',
                   style: Styles.headLineStyle1.copyWith(
                     color: Styles.primaryColor,
-                    fontSize: 20,
                   ),
                 ),
-                const Icon(Icons.arrow_forward_ios),
               ],
             ),
           ],
         ),
       ),
     );
-  }
-
-  Color _getBadgeColor(String badgeType) {
-    switch (badgeType) {
-      case 'Direct':
-        return Styles.successColor;
-      case 'Fastest':
-        return Styles.warningColor;
-      default:
-        return Styles.primaryColor;
-    }
-  }
-}
-
-extension on DateTime {
-  String formatTime() {
-    return '${this.hour.toString().padLeft(2, '0')}:${this.minute.toString().padLeft(2, '0')}';
   }
 }
