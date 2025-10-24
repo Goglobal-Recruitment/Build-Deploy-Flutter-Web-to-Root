@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:booktickets/utils/env_config.dart';
 
 class SerpService {
-  // In a real implementation, you would use your actual SerpApi key
-  static const String _apiKey = 'YOUR_SERPAPI_KEY_HERE';
-  static const String _baseUrl = 'https://serpapi.com/search';
-
   /// Search for flights using SerpApi
   static Future<List<Map<String, dynamic>>> searchFlights({
     required String origin,
@@ -16,13 +13,13 @@ class SerpService {
     try {
       final response = await http.get(
         Uri.parse(
-          '$_baseUrl?engine=google_flights&'
+          '${EnvConfig.serpApiBaseUrl}?engine=google_flights&'
           'departure_id=$origin&'
           'arrival_id=$destination&'
           'outbound_date=$date&'
-          'currency=ZAR&'
+          'currency=${EnvConfig.currencyCode}&'
           'adults=$passengers&'
-          'api_key=$_apiKey',
+          'api_key=${EnvConfig.serpApiKey}',
         ),
       );
 
@@ -45,9 +42,9 @@ class SerpService {
     try {
       final response = await http.get(
         Uri.parse(
-          '$_baseUrl?engine=google&'
+          '${EnvConfig.serpApiBaseUrl}?engine=google&'
           'q=$airlineName&'
-          'api_key=$_apiKey',
+          'api_key=${EnvConfig.serpApiKey}',
         ),
       );
 

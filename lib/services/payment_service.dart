@@ -1,10 +1,9 @@
 import 'package:paystack_payment/paystack_payment.dart';
+import 'package:booktickets/utils/env_config.dart';
 
 class PaymentService {
-  static const String paystackPublicKey = 'pk_test_your_paystack_public_key_here';
-  
   static void initialize() {
-    PaystackPlugin.initialize(publicKey: paystackPublicKey);
+    PaystackPlugin.initialize(publicKey: EnvConfig.paystackPublicKey);
   }
 
   /// Initialize Paystack payment
