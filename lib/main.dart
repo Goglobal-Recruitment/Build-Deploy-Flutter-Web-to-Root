@@ -20,11 +20,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Go Global Flights',
+      title: 'SkyQuest - Find Your Perfect Flight',
       theme: ThemeData(
         primaryColor: primary,
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: primary),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primary,
+          primary: primary,
+          secondary: secondary,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: secondary,
+          foregroundColor: Colors.white,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primary,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
       ),
       home: const BottomBar(),
     );
