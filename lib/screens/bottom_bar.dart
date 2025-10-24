@@ -1,4 +1,5 @@
 import 'package:booktickets/screens/home_screen.dart';
+import 'package:booktickets/screens/manage_bookings_screen.dart';
 import 'package:booktickets/screens/profile_screen.dart';
 import 'package:booktickets/screens/search_screen.dart';
 import 'package:booktickets/screens/ticket_screen.dart';
@@ -14,25 +15,24 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _selectedIndex=0;
-  static final List<Widget>_widgetOptions =<Widget>[
+  int _selectedIndex = 0;
+  static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const SearchScreen(),
     const TicketScreen(),
+    const ManageBookingsScreen(),
     const ProfileScreen()
   ];
 
-  void _onItemTapped(int index){
+  void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex=index;
+      _selectedIndex = index;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: _widgetOptions[_selectedIndex],
       ),
@@ -42,23 +42,35 @@ class _BottomBarState extends State<BottomBar> {
         elevation: 10,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: Colors.blueGrey,
-        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Styles.primaryColor,
         unselectedItemColor: const Color(0xFF526480),
         items: const [
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
               activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
               label: "Home"),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),label: "Search"),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_search_regular),
+              activeIcon: Icon(FluentSystemIcons.ic_fluent_search_filled),
+              label: "Search"),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_ticket_regular),
               activeIcon: Icon(FluentSystemIcons.ic_fluent_ticket_filled),
               label: "Ticket"),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),label: "Profile")
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_bookmark_regular),
+              activeIcon: Icon(FluentSystemIcons.ic_fluent_bookmark_filled),
+              label: "Bookings"),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
+              activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
+              label: "Profile")
         ],
-
       ),
     );
   }
+}
+
+class Styles {
+  static Color primaryColor = const Color(0xFF1D6ED6);
 }

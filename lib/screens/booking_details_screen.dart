@@ -6,12 +6,11 @@ import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/utils/invoice_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 
-class BookingConfirmationScreen extends StatelessWidget {
+class BookingDetailsScreen extends StatelessWidget {
   final Booking booking;
 
-  const BookingConfirmationScreen({Key? key, required this.booking})
+  const BookingDetailsScreen({Key? key, required this.booking})
       : super(key: key);
 
   void _downloadInvoice() {
@@ -51,54 +50,21 @@ class BookingConfirmationScreen extends StatelessWidget {
     html.Url.revokeObjectUrl(url);
   }
 
-  void _goToHome() {
-    Get.offAllNamed('/'); // Navigate to home screen
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
+      appBar: AppBar(
+        title: Text('Booking: ${booking.bookingReference}'),
+        backgroundColor: Styles.secondaryColor,
+        foregroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Success header
+            // Booking status
             Container(
-              padding: EdgeInsets.all(AppLayout.getHeight(40)),
-              color: Styles.successColor,
-              child: Column(
-                children: [
-                  const Icon(
-                    Icons.check_circle,
-                    color: Colors.white,
-                    size: 80,
-                  ),
-                  Gap(AppLayout.getHeight(20)),
-                  Text(
-                    'Booking Confirmed!',
-                    style: Styles.headLineStyle1.copyWith(
-                      color: Colors.white,
-                      fontSize: 32,
-                    ),
-                  ),
-                  Gap(AppLayout.getHeight(10)),
-                  Text(
-                    'Your flight is all set. Have a great trip!',
-                    style: Styles.textStyle.copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            
-            Gap(AppLayout.getHeight(30)),
-            
-            // Booking reference
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20)),
+              margin: EdgeInsets.all(AppLayout.getWidth(15)),
               padding: EdgeInsets.all(AppLayout.getWidth(20)),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -112,35 +78,57 @@ class BookingConfirmationScreen extends StatelessWidget {
                 ],
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Booking Reference',
-                    style: Styles.headLineStyle2,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Booking Reference',
+                        style: Styles.headLineStyle2,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppLayout.getWidth(10),
+                          vertical: AppLayout.getHeight(5),
+                        ),
+                        decoration: BoxDecoration(
+                          color: _getStatusColor(booking.status),
+                          borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
+                        ),
+                        child: Text(
+                          booking.status.toString().split('.').last.toUpperCase(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Gap(AppLayout.getHeight(10)),
                   Text(
                     booking.bookingReference,
                     style: Styles.headLineStyle1.copyWith(
                       color: Styles.primaryColor,
-                      fontSize: 36,
+                      fontSize: 28,
                       fontFamily: 'monospace',
-                      letterSpacing: 5,
+                      letterSpacing: 3,
                     ),
                   ),
-                  Gap(AppLayout.getHeight(10)),
+                  Gap(AppLayout.getHeight(15)),
                   Text(
-                    'Save this reference for your records',
+                    'Booked on: ${booking.bookingDate.formatDateTime()}',
                     style: Styles.headLineStyle4,
                   ),
                 ],
               ),
             ),
             
-            Gap(AppLayout.getHeight(20)),
-            
             // Flight details
             Container(
-              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20)),
+              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
               padding: EdgeInsets.all(AppLayout.getWidth(20)),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -238,6 +226,26 @@ class BookingConfirmationScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Gap(AppLayout.getHeight(10)),
+                  
+                  // Fare info
+                  Container(
+                    padding: EdgeInsets.all(AppLayout.getWidth(10)),
+                    decoration: BoxDecoration(
+                      color: Styles.primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.local_offer),
+                        Gap(AppLayout.getWidth(10)),
+                        Text(
+                          '${booking.selectedFare.type} Fare • ${booking.selectedFare.baggageAllowance}kg baggage',
+                          style: Styles.headLineStyle3,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -246,7 +254,7 @@ class BookingConfirmationScreen extends StatelessWidget {
             
             // Passenger info
             Container(
-              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20)),
+              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
               padding: EdgeInsets.all(AppLayout.getWidth(20)),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -270,21 +278,33 @@ class BookingConfirmationScreen extends StatelessWidget {
                   
                   for (var passenger in booking.passengers)
                     Container(
-                      margin: EdgeInsets.only(bottom: AppLayout.getHeight(10)),
-                      padding: EdgeInsets.all(AppLayout.getWidth(10)),
+                      margin: EdgeInsets.only(bottom: AppLayout.getHeight(15)),
+                      padding: EdgeInsets.all(AppLayout.getWidth(15)),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade300),
                         borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
                       ),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.person),
-                          Gap(AppLayout.getWidth(10)),
-                          Expanded(
-                            child: Text(
-                              passenger.fullName,
-                              style: Styles.headLineStyle3,
+                          Text(
+                            passenger.fullName,
+                            style: Styles.headLineStyle3,
                           ),
+                          Gap(AppLayout.getHeight(5)),
+                          Text(
+                            'DOB: ${passenger.dateOfBirth.formatDate()}',
+                            style: Styles.headLineStyle4,
+                          ),
+                          Gap(AppLayout.getHeight(5)),
+                          Text(
+                            'Email: ${passenger.email}',
+                            style: Styles.headLineStyle4,
+                          ),
+                          Gap(AppLayout.getHeight(5)),
+                          Text(
+                            'Phone: ${passenger.phone}',
+                            style: Styles.headLineStyle4,
                           ),
                         ],
                       ),
@@ -295,57 +315,115 @@ class BookingConfirmationScreen extends StatelessWidget {
             
             Gap(AppLayout.getHeight(20)),
             
-            // Action buttons
+            // Price breakdown
             Container(
-              margin: EdgeInsets.all(AppLayout.getWidth(20)),
+              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
+              padding: EdgeInsets.all(AppLayout.getWidth(20)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    onPressed: _downloadInvoice,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Styles.primaryColor,
-                      minimumSize: Size.fromHeight(AppLayout.getHeight(50)),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.download, color: Colors.white),
-                        SizedBox(width: 10),
-                        Text(
-                          'Download Invoice',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                  Text(
+                    'Price Breakdown',
+                    style: Styles.headLineStyle2,
                   ),
                   Gap(AppLayout.getHeight(15)),
                   
-                  OutlinedButton(
-                    onPressed: _goToHome,
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Styles.primaryColor),
-                      minimumSize: Size.fromHeight(AppLayout.getHeight(50)),
-                    ),
-                    child: Text(
-                      'Back to Home',
+                  _buildPriceRow('Flight Fare (${booking.selectedFare.type})', 
+                      booking.selectedFare.price),
+                  _buildPriceRow('Passengers', 
+                      booking.passengers.length.toDouble(), isCount: true),
+                  _buildPriceRow('Subtotal', 
+                      booking.selectedFare.price * booking.passengers.length),
+                  _buildPriceRow('Taxes & Fees (15%)', 
+                      booking.totalPrice * 0.15),
+                  const Divider(),
+                  _buildPriceRow('Total', booking.totalPrice, isTotal: true),
+                ],
+              ),
+            ),
+            
+            Gap(AppLayout.getHeight(20)),
+            
+            // Action buttons
+            Container(
+              margin: EdgeInsets.all(AppLayout.getWidth(20)),
+              child: ElevatedButton(
+                onPressed: _downloadInvoice,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Styles.primaryColor,
+                  minimumSize: Size.fromHeight(AppLayout.getHeight(50)),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.download, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      'Download Invoice',
                       style: TextStyle(
-                        color: Styles.primaryColor,
+                        color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildPriceRow(String label, double value, {bool isTotal = false, bool isCount = false}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(5)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: isTotal 
+                ? Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold)
+                : Styles.headLineStyle4,
+          ),
+          Text(
+            isCount ? value.toInt().toString() : '\$${value.toStringAsFixed(2)}',
+            style: isTotal 
+                ? Styles.headLineStyle1.copyWith(
+                    color: Styles.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  )
+                : Styles.headLineStyle4,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Color _getStatusColor(BookingStatus status) {
+    switch (status) {
+      case BookingStatus.confirmed:
+        return Styles.successColor;
+      case BookingStatus.pending:
+        return Styles.warningColor;
+      case BookingStatus.cancelled:
+        return Styles.errorColor;
+      default:
+        return Colors.grey;
+    }
   }
 }
 
