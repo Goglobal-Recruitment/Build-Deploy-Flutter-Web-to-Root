@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Go Global Flights">
-  <link rel="apple-touch-icon" href="./assets/images/icon-192.png">
-  <link rel="icon" type="image/png" href="./assets/images/favicon.png"/>
-  <title>Go Global Flights - Static Site</title>
+  <link rel="apple-touch-icon" href="../assets/images/icon-192.png">
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png"/>
+  <title>Go Global Flights - South African Flight Booking</title>
   <style>
     * {
       margin: 0;
@@ -24,12 +24,301 @@
       color: #333;
     }
     
+    /* Progress Steps */
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+    }
+    
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .step-label {
+      font-size: 10px;
+      color: #666;
+    }
+    
+    .step.active .step-number {
+      background: #667eea;
+      color: white;
+    }
+    
+    .step.active .step-label {
+      color: #667eea;
+      font-weight: bold;
+    }
+    
+    /* Screens */
+    .screen {
+      padding: 20px;
+    }
+    
+    .screen-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: #667eea;
+      cursor: pointer;
+      margin-right: 15px;
+    }
+    
     /* Flight Details Screen */
     .flight-details-card {
       background-color: white;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       padding: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .flight-details-container {
+      margin-bottom: 20px;
+    }
+    
+    /* Filters */
+    .filters-section {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .filter-group {
+      margin-bottom: 15px;
+    }
+    
+    .filter-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .price-slider-container {
+      padding: 0 5px;
+    }
+    
+    .price-range {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    
+    /* Flights Container */
+    .flights-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    /* Fare Rules */
+    .fare-rules {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .fare-rules h3 {
+      margin-bottom: 10px;
+    }
+    
+    .rule-item {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .rule-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .rule-content {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    /* Passenger Form */
+    .passenger-form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Payment */
+    .payment-summary {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .payment-methods {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .payment-method-tabs {
+      display: flex;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 20px;
+    }
+    
+    .payment-tab {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    
+    .payment-tab.active {
+      border-bottom-color: #667eea;
+      color: #667eea;
+      font-weight: 500;
+    }
+    
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+    }
+    
+    /* Confirmation */
+    .confirmation-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .success-icon {
+      width: 60px;
+      height: 60px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+    
+    .booking-reference {
+      margin: 15px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    
+    .confirmation-details {
+      width: 100%;
+      margin: 20px 0;
+      text-align: left;
+    }
+    
+    .e-ticket {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    .ticket-barcode-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+    .barcode {
+      height: 80px;
+      background: #f5f5f5;
+      width: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    /* Buttons */
+    .primary-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    .secondary-btn {
+      background: white;
+      color: #667eea;
+      border: 1px solid #667eea;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
     }
     
     .app-container {
@@ -302,42 +591,105 @@
 </head>
 <body>
   <div class="app-container">
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+      <div class="step active" data-step="search">
+        <div class="step-number">1</div>
+        <div class="step-label">Search</div>
+      </div>
+      <div class="step" data-step="results">
+        <div class="step-number">2</div>
+        <div class="step-label">Results</div>
+      </div>
+      <div class="step" data-step="details">
+        <div class="step-number">3</div>
+        <div class="step-label">Details</div>
+      </div>
+      <div class="step" data-step="passenger">
+        <div class="step-number">4</div>
+        <div class="step-label">Passenger</div>
+      </div>
+      <div class="step" data-step="payment">
+        <div class="step-number">5</div>
+        <div class="step-label">Payment</div>
+      </div>
+      <div class="step" data-step="confirmation">
+        <div class="step-number">6</div>
+        <div class="step-label">Confirmation</div>
+      </div>
+    </div>
+    
     <div class="header">
       <div class="profile-pic">👤</div>
-      <div class="greeting">Good morning</div>
+      <div class="greeting">Go Global Flights</div>
       <div class="title">Book Tickets</div>
+      <div class="manage-bookings" id="manage-bookings-btn">Manage Bookings</div>
     </div>
     
     <div class="search-section">
       <div class="search-tabs">
         <div class="tab active">✈️ Flights</div>
         <div class="tab">🏨 Hotels</div>
+        <div class="tab">🚗 Car Rentals</div>
       </div>
       
       <div class="search-form">
+        <div class="trip-type-row">
+          <label class="radio-container">
+            <input type="radio" name="trip-type" value="return" checked>
+            <span class="radio-label">Return</span>
+          </label>
+          <label class="radio-container">
+            <input type="radio" name="trip-type" value="one-way">
+            <span class="radio-label">One-way</span>
+          </label>
+          <label class="radio-container">
+            <input type="radio" name="trip-type" value="multi-city">
+            <span class="radio-label">Multi-city</span>
+          </label>
+        </div>
         <div class="form-row">
           <div class="form-group">
-            <label>From</label>
-            <input type="text" value="NYC" placeholder="Departure">
+            <label for="from">From</label>
+            <select id="from" required>
+              <option value="">Select departure airport</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>To</label>
-            <input type="text" value="LDN" placeholder="Destination">
+            <label for="to">To</label>
+            <select id="to" required>
+              <option value="">Select destination airport</option>
+            </select>
           </div>
         </div>
         
         <div class="form-row">
           <div class="form-group">
-            <label>Departure</label>
-            <input type="date" value="2024-01-15">
+            <label for="depart-date">Depart</label>
+            <input type="date" id="depart-date" value="2024-01-15" required>
           </div>
-          <div class="form-group">
-            <label>Return</label>
-            <input type="date" value="2024-01-22">
+          <div class="form-group" id="return-date-group">
+            <label for="return-date">Return</label>
+            <input type="date" id="return-date" value="2024-01-22">
           </div>
         </div>
         
-        <button class="search-btn">🔍 Find tickets</button>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="passengers">Passengers</label>
+            <input type="number" id="passengers" min="1" max="9" value="1">
+          </div>
+          <div class="form-group">
+            <label for="cabin-class">Cabin Class</label>
+            <select id="cabin-class">
+              <option value="economy">Economy (R12,500 - R18,900)</option>
+              <option value="business">Business (R85,000 - R120,000)</option>
+              <option value="first">First Class (R120,001 - R142,000)</option>
+            </select>
+          </div>
+        </div>
+        
+        <button class="search-btn" id="search-btn">🔍 Search Flights</button>
       </div>
     </div>
     
@@ -361,25 +713,190 @@
           </div>
         </div>
         <div class="ticket-body">
-          <div class="price">$629</div>
+          <div class="price">R12,500</div>
         </div>
       </div>
       
       <div class="ticket">
         <div class="ticket-header">
           <div class="route">
-            <div class="airport">DK</div>
+            <div class="airport">JNB</div>
             <div class="flight-icon">✈️</div>
-            <div class="airport">SH</div>
+            <div class="airport">LHR</div>
           </div>
           <div class="flight-details">
-            <div>Dhaka</div>
-            <div>4H 20M</div>
-            <div>Shanghai</div>
+            <div>Johannesburg</div>
+            <div>11H 30M</div>
+            <div>London</div>
           </div>
         </div>
         <div class="ticket-body">
-          <div class="price">$459</div>
+          <div class="price">R14,750</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Flight Results Screen -->
+    <div id="results-screen" class="screen" style="display: none;">
+      <div class="screen-header">
+        <button class="back-btn">← Back</button>
+        <h2>Flight Results</h2>
+      </div>
+      
+      <div class="filters-section">
+        <div class="filter-group">
+          <label>Sort by:</label>
+          <select id="sort-by">
+            <option value="price">Price (Low to High)</option>
+            <option value="price-desc">Price (High to Low)</option>
+            <option value="duration">Duration (Shortest)</option>
+            <option value="stops">Stops (Least first)</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label>Price Range:</label>
+          <div class="price-slider-container">
+            <input type="range" id="price-slider" min="0" max="100" value="100">
+            <div class="price-range">
+              <span id="min-price">R12,500</span>
+              <span id="max-price">R18,900</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="flights-container" class="flights-container">
+        <!-- Flight cards will be added here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Flight Details Screen -->
+    <div id="details-screen" class="screen" style="display: none;">
+      <div class="screen-header">
+        <button class="back-btn">← Back</button>
+        <h2>Flight Details</h2>
+      </div>
+      
+      <div id="flight-details-container" class="flight-details-container">
+        <!-- Flight details will be added here dynamically -->
+      </div>
+      
+      <div class="fare-rules">
+        <h3>Fare Rules</h3>
+        <div class="rule-item">
+          <div class="rule-title">Cancellation</div>
+          <div class="rule-content">Cancellation fee of R1,500 applies up to 24 hours before departure. Non-refundable within 24 hours.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-title">Changes</div>
+          <div class="rule-content">Changes allowed with a fee of R950 plus any fare difference.</div>
+        </div>
+      </div>
+      
+      <button id="select-flight-btn" class="primary-btn">Select This Flight</button>
+    </div>
+    
+    <!-- Passenger Form Screen -->
+    <div id="passenger-screen" class="screen" style="display: none;">
+      <div class="screen-header">
+        <button class="back-btn">← Back</button>
+        <h2>Passenger Details</h2>
+      </div>
+      
+      <div class="passenger-form">
+        <div class="form-group">
+          <label for="full-name">Full Name (as on passport/ID)</label>
+          <input type="text" id="full-name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="id-number">ID/Passport Number</label>
+          <input type="text" id="id-number" required>
+        </div>
+        
+        <button id="continue-to-payment-btn" class="primary-btn">Continue to Payment</button>
+      </div>
+    </div>
+    
+    <!-- Payment Screen -->
+    <div id="payment-screen" class="screen" style="display: none;">
+      <div class="screen-header">
+        <button class="back-btn">← Back</button>
+        <h2>Payment</h2>
+      </div>
+      
+      <div class="payment-summary">
+        <h3>Booking Summary</h3>
+        <div id="payment-flight-summary" class="payment-flight-summary">
+          <!-- Flight summary will be added here dynamically -->
+        </div>
+        
+        <div class="payment-total">
+          <div class="payment-label">Total Amount:</div>
+          <div id="payment-amount" class="payment-amount">R0.00</div>
+        </div>
+      </div>
+      
+      <div class="payment-methods">
+        <h3>Payment Methods</h3>
+        <div class="payment-method-tabs">
+          <div class="payment-tab active" data-method="qr">QR Code Payment</div>
+          <div class="payment-tab" data-method="card">Credit Card</div>
+        </div>
+        
+        <div id="qr-payment" class="payment-method-content">
+          <div class="qr-container">
+            <div id="payment-qr-code" class="qr-code">
+              <!-- QR code will be generated here -->
+            </div>
+            <p>Scan this QR code with your banking app to complete payment</p>
+          </div>
+        </div>
+      </div>
+      
+      <button id="complete-payment-btn" class="primary-btn">Complete Payment</button>
+    </div>
+    
+    <!-- Confirmation Screen -->
+    <div id="confirmation-screen" class="screen" style="display: none;">
+      <div class="screen-header">
+        <h2>Booking Confirmed!</h2>
+      </div>
+      
+      <div class="confirmation-content">
+        <div class="success-icon">✓</div>
+        <h3>Thank You For Your Booking</h3>
+        <div id="booking-reference" class="booking-reference">Booking Reference: <span id="booking-ref-number">GGF12345</span></div>
+        
+        <div class="confirmation-details">
+          <div id="confirmation-flight-summary" class="confirmation-flight-summary">
+            <!-- Flight summary will be added here dynamically -->
+          </div>
+        </div>
+        
+        <div class="e-ticket">
+          <h3>E-Ticket</h3>
+          <div class="ticket-barcode-container">
+            <div id="ticket-barcode" class="barcode">
+              <!-- Barcode will be generated here -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button id="download-invoice-btn" class="secondary-btn">Download Invoice</button>
+          <button id="view-booking-btn" class="primary-btn">View Booking</button>
         </div>
       </div>
     </div>
@@ -440,7 +957,7 @@
     </div>
   </div>
   
-  <script src="js/mockData.js"></script>
-  <script src="js/app.js"></script>
+  <script src="../js/mockData.js"></script>
+  <script src="../js/app.js"></script>
 </body>
 </html>
