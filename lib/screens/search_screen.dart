@@ -1,163 +1,293 @@
+import 'package:booktickets/models/airport.dart';
+import 'package:booktickets/models/flight.dart';
+import 'package:booktickets/services/flight_service.dart';
 import 'package:booktickets/utils/app_layout.dart';
 import 'package:booktickets/widgets/icon_text_widget.dart';
 import 'package:booktickets/widgets/ticket_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 import '../utils/app_styles.dart';
 import '../widgets/double_text_widget.dart';
+import 'flight_results_screen.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final FlightService _flightService = FlightService();
+  late List<Airport> _airports;
+  Airport? _selectedOrigin;
+  Airport? _selectedDestination;
+  DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
+  int _passengers = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _airports = _flightService.getAirports();
+    if (_airports.isNotEmpty) {
+      _selectedOrigin = _airports[0];
+      _selectedDestination = _airports.length > 1 ? _airports[1] : _airports[0];
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+  void _searchFlights() {
+    if (_selectedOrigin == null || _selectedDestination == null) {
+      Get.snackbar(
+        "Error",
+        "Please select both origin and destination",
+        backgroundColor: Styles.errorColor,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    // Navigate to results screen
+    Get.to(() => FlightResultsScreen(
+          origin: _selectedOrigin!,
+          destination: _selectedDestination!,
+          date: _selectedDate,
+          passengers: _passengers,
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = AppLayout.getSize(context);
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Styles.bgColor,
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20),vertical: AppLayout.getHeight(20)),
+        padding: EdgeInsets.symmetric(
+            horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(20)),
         children: [
-           Gap(AppLayout.getHeight(40)),
-           Text("What are\nyou looking for?", style: Styles.headLineStyle1.copyWith(fontSize:AppLayout.getWidth(35) ),),
+          Gap(AppLayout.getHeight(40)),
+          Text("Find Your\nPerfect Flight", 
+              style: Styles.headLineStyle1.copyWith(
+                  fontSize: AppLayout.getWidth(35))),
           Gap(AppLayout.getHeight(20)),
-          const AppTicketTabs(firstTab: "Airline Tickets", secondTab: "Hotels",),
+          const AppTicketTabs(firstTab: "Flights", secondTab: "Hotels"),
           Gap(AppLayout.getHeight(25)),
-          const AppIconText(icon: Icons.flight_takeoff_rounded, text: "Departure"),
-          Gap(AppLayout.getHeight(20)),
-          const AppIconText(icon: Icons.flight_land_rounded, text: "Arrival"),
-          Gap(AppLayout.getHeight(25)),
-          Container(
-            padding: EdgeInsets.symmetric(
-                vertical: AppLayout.getWidth(18),
-                horizontal: AppLayout.getWidth(15)),
-            decoration: BoxDecoration(
-              color: Color(
-              0xD91130CE),
-              borderRadius: BorderRadius.circular(AppLayout.getWidth(10)),
+          
+          // Origin selection
+          const AppIconText(icon: Icons.flight_takeoff_rounded, text: "From"),
+          Gap(AppLayout.getHeight(10)),
+          DropdownButtonFormField<Airport>(
+            value: _selectedOrigin,
+            decoration: const InputDecoration(
+              labelText: "Origin Airport",
+              border: OutlineInputBorder(),
             ),
-            child:Center(
+            items: _airports.map((Airport airport) {
+              return DropdownMenuItem<Airport>(
+                value: airport,
+                child: Text("${airport.city} (${airport.code})"),
+              );
+            }).toList(),
+            onChanged: (Airport? newValue) {
+              setState(() {
+                _selectedOrigin = newValue;
+              });
+            },
+          ),
+          Gap(AppLayout.getHeight(20)),
+          
+          // Destination selection
+          const AppIconText(icon: Icons.flight_land_rounded, text: "To"),
+          Gap(AppLayout.getHeight(10)),
+          DropdownButtonFormField<Airport>(
+            value: _selectedDestination,
+            decoration: const InputDecoration(
+              labelText: "Destination Airport",
+              border: OutlineInputBorder(),
+            ),
+            items: _airports.map((Airport airport) {
+              return DropdownMenuItem<Airport>(
+                value: airport,
+                child: Text("${airport.city} (${airport.code})"),
+              );
+            }).toList(),
+            onChanged: (Airport? newValue) {
+              setState(() {
+                _selectedDestination = newValue;
+              });
+            },
+          ),
+          Gap(AppLayout.getHeight(20)),
+          
+          // Date selection
+          const AppIconText(icon: Icons.date_range, text: "Departure Date"),
+          Gap(AppLayout.getHeight(10)),
+          TextFormField(
+            readOnly: true,
+            decoration: const InputDecoration(
+              labelText: "Select Date",
+              border: OutlineInputBorder(),
+              suffixIcon: Icon(Icons.calendar_today),
+            ),
+            controller: TextEditingController(
+              text: "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
+            ),
+            onTap: () => _selectDate(context),
+          ),
+          Gap(AppLayout.getHeight(20)),
+          
+          // Passengers selection
+          const AppIconText(icon: Icons.person, text: "Passengers"),
+          Gap(AppLayout.getHeight(10)),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  if (_passengers > 1) {
+                    setState(() {
+                      _passengers--;
+                    });
+                  }
+                },
+                icon: const Icon(Icons.remove),
+              ),
+              Text("$_passengers Passenger${_passengers > 1 ? 's' : ''}", 
+                  style: Styles.headLineStyle3),
+              IconButton(
+                onPressed: () {
+                  if (_passengers < 9) {
+                    setState(() {
+                      _passengers++;
+                    });
+                  }
+                },
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
+          Gap(AppLayout.getHeight(25)),
+          
+          // Search button
+          ElevatedButton(
+            onPressed: _searchFlights,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Styles.primaryColor,
+              padding: EdgeInsets.symmetric(
+                  vertical: AppLayout.getHeight(18),
+                  horizontal: AppLayout.getWidth(15)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppLayout.getWidth(10)),
+              ),
+            ),
+            child: Center(
               child: Text(
-                "find tickets",
-                style: Styles.textStyle.copyWith(color:Colors.white,),
+                "Search Flights",
+                style: Styles.textStyle.copyWith(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
           Gap(AppLayout.getHeight(40)),
-          const AppDoubleTextWidget(bigText: "Upcoming Flights", smallText: "View all"),
+          
+          // Promotional content
+          const AppDoubleTextWidget(
+              bigText: "Special Offers", smallText: "View all"),
           Gap(AppLayout.getHeight(15)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: AppLayout.getHeight(425),
-                width: size.width*0.42,
-                padding: EdgeInsets.symmetric(horizontal: AppLayout.getHeight(15), vertical: AppLayout.getWidth(15)),
+                height: AppLayout.getHeight(200),
+                width: size.width * 0.42,
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppLayout.getHeight(15),
+                    vertical: AppLayout.getWidth(15)),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(AppLayout.getHeight(20)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.shade200,
-                      blurRadius: 1,
-                      spreadRadius: 1
-                    )
-                  ]
+                        color: Colors.grey.shade200,
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ],
                 ),
                 child: Column(
                   children: [
                     Container(
-                      height: AppLayout.getHeight(190),
+                      height: AppLayout.getHeight(100),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppLayout.getHeight(12)),
-                        image: const DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            "assets/images/sit.jpg"
-                          )
-                        )
-                      ),
+                          borderRadius: BorderRadius.circular(AppLayout.getHeight(12)),
+                          color: Styles.primaryColor.withOpacity(0.1),
+                          image: const DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage("assets/images/img.png"),
+                          )),
                     ),
                     Gap(AppLayout.getHeight(12)),
                     Text(
-                      "20% discount on the early booking of this flight. Don't miss.",
+                      "20% off early bookings",
                       style: Styles.headLineStyle2,
+                      textAlign: TextAlign.center,
                     )
                   ],
                 ),
               ),
-              Column(
-                children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: size.width*0.44,
-                      height: AppLayout.getHeight(200),
-                      decoration: BoxDecoration(
-                          color: Color(0xFF3AB8B8),
-                          borderRadius: BorderRadius.circular(AppLayout.getHeight(18))
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(15), horizontal: AppLayout.getHeight(15)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Discount\nfor survey", style: Styles.headLineStyle2.copyWith(fontWeight: FontWeight.bold,color: Colors.white),),
-                          Gap(AppLayout.getHeight(10)),
-                          Text("Take the survey about our services and get discount", style: Styles.headLineStyle2.copyWith(fontWeight: FontWeight.w500,color: Colors.white,fontSize: 18),),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                        right: -45,
-                        top:-40,
-                        child: Container(
-                      padding: EdgeInsets.all(AppLayout.getHeight(30)),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(width: 18,color: Color(0xFF189999)),
-                          color: Colors.transparent
-                      ),
-                    )
-                    ),
+              Container(
+                height: AppLayout.getHeight(200),
+                width: size.width * 0.42,
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppLayout.getHeight(15),
+                    vertical: AppLayout.getWidth(15)),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(AppLayout.getHeight(20)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.shade200,
+                        blurRadius: 1,
+                        spreadRadius: 1)
                   ],
                 ),
-                  Gap(AppLayout.getHeight(15)),
-                  Container(
-                    width: size.width*0.44,
-                    height: AppLayout.getHeight(210),
-                    padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(15), horizontal: AppLayout.getHeight(15)),
-
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppLayout.getHeight(18)),
-                      color:const Color(0xFFEC6545)
+                child: Column(
+                  children: [
+                    Container(
+                      height: AppLayout.getHeight(100),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppLayout.getHeight(12)),
+                          color: Styles.accentColor.withOpacity(0.3),
+                          image: const DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage("assets/images/img_1.png"),
+                          )),
                     ),
-                    child: Column(
-                      children: [
-                        Text("Take love", style: Styles.headLineStyle2.copyWith(color: Colors.white, fontWeight: FontWeight.bold, ),textAlign: TextAlign.center,),
-                        Gap(AppLayout.getHeight(5)),
-                        RichText(
-                          text:const TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: '😍',
-                                  style: TextStyle(fontSize: 38)
-                              ),
-                              TextSpan(
-                                  text: '🥰',
-                                  style: TextStyle(fontSize: 50)
-                              ),
-                              TextSpan(
-                                  text: '😘',
-                                  style: TextStyle(fontSize: 38)
-                              ),
-                            ]
-                          )
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )
+                    Gap(AppLayout.getHeight(12)),
+                    Text(
+                      "Refer a friend, get \$50",
+                      style: Styles.headLineStyle2,
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
+              ),
             ],
           )
         ],

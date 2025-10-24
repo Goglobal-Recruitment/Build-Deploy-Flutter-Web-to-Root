@@ -28,6 +28,9 @@ dependencies:
 
   # JSON handling
   flutter_json_view: ^2.0.0
+  
+  # UUID for generating unique IDs
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:
