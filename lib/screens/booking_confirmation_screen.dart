@@ -7,6 +7,7 @@ import 'package:booktickets/utils/invoice_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class BookingConfirmationScreen extends StatelessWidget {
   final Booking booking;
@@ -130,6 +131,51 @@ class BookingConfirmationScreen extends StatelessWidget {
                   Gap(AppLayout.getHeight(10)),
                   Text(
                     'Save this reference for your records',
+                    style: Styles.headLineStyle4,
+                  ),
+                ],
+              ),
+            ),
+            
+            Gap(AppLayout.getHeight(20)),
+            
+            // E-Ticket with QR Code
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20)),
+              padding: EdgeInsets.all(AppLayout.getWidth(20)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'E-Ticket',
+                    style: Styles.headLineStyle2,
+                  ),
+                  Gap(AppLayout.getHeight(15)),
+                  
+                  // QR Code for the ticket
+                  Center(
+                    child: BarcodeWidget(
+                      barcode: Barcode.qrCode(),
+                      data: 'booking:${booking.bookingReference}|flight:${booking.flight.flightNumber}|passenger:${booking.passengers.length}',
+                      width: 200,
+                      height: 200,
+                    ),
+                  ),
+                  Gap(AppLayout.getHeight(15)),
+                  Text(
+                    'Scan this QR code at the airport for check-in',
+                    textAlign: TextAlign.center,
                     style: Styles.headLineStyle4,
                   ),
                 ],

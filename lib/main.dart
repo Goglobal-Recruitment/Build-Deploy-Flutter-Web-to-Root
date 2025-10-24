@@ -4,6 +4,10 @@ import 'package:booktickets/screens/bottom_bar.dart';
 import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/services/payment_service.dart';
 
+// Define primary and secondary colors
+const Color primary = Color(0xFF1D6ED6);
+const Color secondary = Color(0xFF0E2D5D);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
