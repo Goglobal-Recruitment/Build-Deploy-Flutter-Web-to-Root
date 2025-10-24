@@ -4,6 +4,12 @@ import 'package:booktickets/models/booking.dart';
 import 'package:booktickets/utils/app_layout.dart';
 import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/utils/invoice_generator.dart';
+import 'package:booktickets/widgets/badge_widget.dart';
+import 'package:booktickets/widgets/custom_app_bar.dart';
+import 'package:booktickets/widgets/custom_button.dart';
+import 'package:booktickets/widgets/custom_card.dart';
+import 'package:booktickets/widgets/passenger_info_card.dart';
+import 'package:booktickets/widgets/price_display.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -54,29 +60,15 @@ class BookingDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
-      appBar: AppBar(
-        title: Text('Booking: ${booking.bookingReference}'),
-        backgroundColor: Styles.secondaryColor,
-        foregroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: 'Booking: ${booking.bookingReference}',
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             // Booking status
-            Container(
-              margin: EdgeInsets.all(AppLayout.getWidth(15)),
-              padding: EdgeInsets.all(AppLayout.getWidth(20)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
+            CustomCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -87,23 +79,9 @@ class BookingDetailsScreen extends StatelessWidget {
                         'Booking Reference',
                         style: Styles.headLineStyle2,
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: AppLayout.getWidth(10),
-                          vertical: AppLayout.getHeight(5),
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(booking.status),
-                          borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
-                        ),
-                        child: Text(
-                          booking.status.toString().split('.').last.toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      BadgeWidget(
+                        text: booking.status.toString().split('.').last.toUpperCase(),
+                        color: _getStatusColor(booking.status),
                       ),
                     ],
                   ),
@@ -127,20 +105,7 @@ class BookingDetailsScreen extends StatelessWidget {
             ),
             
             // Flight details
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
-              padding: EdgeInsets.all(AppLayout.getWidth(20)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
+            CustomCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -253,20 +218,7 @@ class BookingDetailsScreen extends StatelessWidget {
             Gap(AppLayout.getHeight(20)),
             
             // Passenger info
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
-              padding: EdgeInsets.all(AppLayout.getWidth(20)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
+            CustomCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -277,38 +229,7 @@ class BookingDetailsScreen extends StatelessWidget {
                   Gap(AppLayout.getHeight(15)),
                   
                   for (var passenger in booking.passengers)
-                    Container(
-                      margin: EdgeInsets.only(bottom: AppLayout.getHeight(15)),
-                      padding: EdgeInsets.all(AppLayout.getWidth(15)),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            passenger.fullName,
-                            style: Styles.headLineStyle3,
-                          ),
-                          Gap(AppLayout.getHeight(5)),
-                          Text(
-                            'DOB: ${passenger.dateOfBirth.formatDate()}',
-                            style: Styles.headLineStyle4,
-                          ),
-                          Gap(AppLayout.getHeight(5)),
-                          Text(
-                            'Email: ${passenger.email}',
-                            style: Styles.headLineStyle4,
-                          ),
-                          Gap(AppLayout.getHeight(5)),
-                          Text(
-                            'Phone: ${passenger.phone}',
-                            style: Styles.headLineStyle4,
-                          ),
-                        ],
-                      ),
-                    ),
+                    PassengerInfoCard(passenger: passenger),
                 ],
               ),
             ),
@@ -316,20 +237,7 @@ class BookingDetailsScreen extends StatelessWidget {
             Gap(AppLayout.getHeight(20)),
             
             // Price breakdown
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
-              padding: EdgeInsets.all(AppLayout.getWidth(20)),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
+            CustomCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -358,27 +266,10 @@ class BookingDetailsScreen extends StatelessWidget {
             // Action buttons
             Container(
               margin: EdgeInsets.all(AppLayout.getWidth(20)),
-              child: ElevatedButton(
+              child: CustomButton(
                 onPressed: _downloadInvoice,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Styles.primaryColor,
-                  minimumSize: Size.fromHeight(AppLayout.getHeight(50)),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.download, color: Colors.white),
-                    SizedBox(width: 10),
-                    Text(
-                      'Download Invoice',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                text: 'Download Invoice',
+                icon: Icons.download,
               ),
             ),
           ],
@@ -399,15 +290,21 @@ class BookingDetailsScreen extends StatelessWidget {
                 ? Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold)
                 : Styles.headLineStyle4,
           ),
-          Text(
-            isCount ? value.toInt().toString() : '\$${value.toStringAsFixed(2)}',
-            style: isTotal 
-                ? Styles.headLineStyle1.copyWith(
-                    color: Styles.primaryColor,
-                    fontWeight: FontWeight.bold,
-                  )
-                : Styles.headLineStyle4,
-          ),
+          if (isCount)
+            Text(
+              value.toInt().toString(),
+              style: isTotal 
+                  ? Styles.headLineStyle1.copyWith(
+                      color: Styles.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    )
+                  : Styles.headLineStyle4,
+            )
+          else
+            PriceDisplay(
+              price: value,
+              isLarge: isTotal,
+            ),
         ],
       ),
     );

@@ -1,46 +1,23 @@
 import 'dart:math';
+import '../data/airport_airline_data.dart';
+import '../data/mock_flights.dart';
 import '../models/airport.dart';
 import '../models/flight.dart';
 import '../models/booking.dart';
 
 class FlightService {
   // Sample airports data
-  static final List<Airport> _airports = [
-    Airport(code: 'JFK', name: 'John F. Kennedy International Airport', city: 'New York', country: 'USA'),
-    Airport(code: 'LHR', name: 'Heathrow Airport', city: 'London', country: 'UK'),
-    Airport(code: 'CDG', name: 'Charles de Gaulle Airport', city: 'Paris', country: 'France'),
-    Airport(code: 'DXB', name: 'Dubai International Airport', city: 'Dubai', country: 'UAE'),
-    Airport(code: 'SIN', name: 'Changi Airport', city: 'Singapore', country: 'Singapore'),
-    Airport(code: 'SYD', name: 'Sydney Airport', city: 'Sydney', country: 'Australia'),
-    Airport(code: 'HND', name: 'Haneda Airport', city: 'Tokyo', country: 'Japan'),
-    Airport(code: 'PEK', name: 'Beijing Capital International Airport', city: 'Beijing', country: 'China'),
-    Airport(code: 'FRA', name: 'Frankfurt Airport', city: 'Frankfurt', country: 'Germany'),
-    Airport(code: 'AMS', name: 'Amsterdam Airport Schiphol', city: 'Amsterdam', country: 'Netherlands'),
-    Airport(code: 'IST', name: 'Istanbul Airport', city: 'Istanbul', country: 'Turkey'),
-    Airport(code: 'DEL', name: 'Indira Gandhi International Airport', city: 'New Delhi', country: 'India'),
-    Airport(code: 'YYZ', name: 'Toronto Pearson International Airport', city: 'Toronto', country: 'Canada'),
-    Airport(code: 'LAX', name: 'Los Angeles International Airport', city: 'Los Angeles', country: 'USA'),
-    Airport(code: 'ORD', name: 'O\'Hare International Airport', city: 'Chicago', country: 'USA'),
-  ];
+  static final List<Airport> _airports = AirportData.airports
+      .map((data) => Airport(
+            code: data['code']!,
+            name: data['name']!,
+            city: data['city']!,
+            country: data['country']!,
+          ))
+      .toList();
 
   // Sample airlines data
-  static final List<Map<String, String>> _airlines = [
-    {'code': 'AA', 'name': 'American Airlines'},
-    {'code': 'BA', 'name': 'British Airways'},
-    {'code': 'AF', 'name': 'Air France'},
-    {'code': 'EK', 'name': 'Emirates'},
-    {'code': 'SQ', 'name': 'Singapore Airlines'},
-    {'code': 'QF', 'name': 'Qantas'},
-    {'code': 'JL', 'name': 'Japan Airlines'},
-    {'code': 'CA', 'name': 'Air China'},
-    {'code': 'LH', 'name': 'Lufthansa'},
-    {'code': 'KL', 'name': 'KLM Royal Dutch Airlines'},
-    {'code': 'TK', 'name': 'Turkish Airlines'},
-    {'code': 'AI', 'name': 'Air India'},
-    {'code': 'AC', 'name': 'Air Canada'},
-    {'code': 'DL', 'name': 'Delta Air Lines'},
-    {'code': 'UA', 'name': 'United Airlines'},
-  ];
+  static final List<Map<String, String>> _airlines = AirlineData.airlines;
 
   // Get all airports
   List<Airport> getAirports() => _airports;
@@ -56,6 +33,13 @@ class FlightService {
 
   // Get all airlines
   List<Map<String, String>> getAirlines() => _airlines;
+
+  // Get mock flights
+  List<Flight> getMockFlights() {
+    return MockFlights.flights
+        .map((data) => Flight.fromJson(data))
+        .toList();
+  }
 
   // Generate mock flights
   List<Flight> generateMockFlights({
@@ -202,6 +186,19 @@ class FlightService {
     required DateTime date,
     int passengers = 1,
   }) {
+    // First check if we have predefined mock flights for this route
+    final List<Flight> predefinedFlights = MockFlights.flights
+        .where((flightData) =>
+            flightData['originCode'] == originCode &&
+            flightData['destinationCode'] == destinationCode)
+        .map((data) => Flight.fromJson(data))
+        .toList();
+
+    if (predefinedFlights.isNotEmpty) {
+      return predefinedFlights;
+    }
+
+    // Otherwise generate mock flights
     return generateMockFlights(
       originCode: originCode,
       destinationCode: destinationCode,

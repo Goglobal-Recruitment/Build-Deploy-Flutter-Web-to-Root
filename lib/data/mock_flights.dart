@@ -1,0 +1,536 @@
+// Mock flight data with realistic routes and pricing
+// This file contains sample flight data for demonstration purposes
+
+class MockFlights {
+  static const List<Map<String, dynamic>> flights = [
+    // JFK to LHR (New York to London)
+    {
+      'id': 'FL001',
+      'flightNumber': 'BA178',
+      'airlineCode': 'BA',
+      'airlineName': 'British Airways',
+      'originCode': 'JFK',
+      'destinationCode': 'LHR',
+      'departureTime': '2025-11-15T18:30:00',
+      'arrivalTime': '2025-11-16T06:45:00',
+      'duration': 405, // 6h 45m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'JFK',
+          'destinationCode': 'LHR',
+          'departureTime': '2025-11-15T18:30:00',
+          'arrivalTime': '2025-11-16T06:45:00',
+          'airlineCode': 'BA',
+          'airlineName': 'British Airways',
+          'aircraft': 'Boeing 777',
+          'duration': 405,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 450.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 550.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 750.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // JFK to CDG (New York to Paris)
+    {
+      'id': 'FL002',
+      'flightNumber': 'AF021',
+      'airlineCode': 'AF',
+      'airlineName': 'Air France',
+      'originCode': 'JFK',
+      'destinationCode': 'CDG',
+      'departureTime': '2025-11-15T21:15:00',
+      'arrivalTime': '2025-11-16T11:30:00',
+      'duration': 435, // 7h 15m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'JFK',
+          'destinationCode': 'CDG',
+          'departureTime': '2025-11-15T21:15:00',
+          'arrivalTime': '2025-11-16T11:30:00',
+          'airlineCode': 'AF',
+          'airlineName': 'Air France',
+          'aircraft': 'Airbus A350',
+          'duration': 435,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 420.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 520.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 720.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // LHR to DXB (London to Dubai)
+    {
+      'id': 'FL003',
+      'flightNumber': 'EK003',
+      'airlineCode': 'EK',
+      'airlineName': 'Emirates',
+      'originCode': 'LHR',
+      'destinationCode': 'DXB',
+      'departureTime': '2025-11-16T13:45:00',
+      'arrivalTime': '2025-11-16T23:15:00',
+      'duration': 390, // 6h 30m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'LHR',
+          'destinationCode': 'DXB',
+          'departureTime': '2025-11-16T13:45:00',
+          'arrivalTime': '2025-11-16T23:15:00',
+          'airlineCode': 'EK',
+          'airlineName': 'Emirates',
+          'aircraft': 'Boeing 777',
+          'duration': 390,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 380.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 480.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 680.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // DXB to SIN (Dubai to Singapore)
+    {
+      'id': 'FL004',
+      'flightNumber': 'SQ491',
+      'airlineCode': 'SQ',
+      'airlineName': 'Singapore Airlines',
+      'originCode': 'DXB',
+      'destinationCode': 'SIN',
+      'departureTime': '2025-11-17T02:30:00',
+      'arrivalTime': '2025-11-17T12:45:00',
+      'duration': 435, // 7h 15m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'DXB',
+          'destinationCode': 'SIN',
+          'departureTime': '2025-11-17T02:30:00',
+          'arrivalTime': '2025-11-17T12:45:00',
+          'airlineCode': 'SQ',
+          'airlineName': 'Singapore Airlines',
+          'aircraft': 'Airbus A380',
+          'duration': 435,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 410.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 510.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 710.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // SIN to SYD (Singapore to Sydney)
+    {
+      'id': 'FL005',
+      'flightNumber': 'QF012',
+      'airlineCode': 'QF',
+      'airlineName': 'Qantas',
+      'originCode': 'SIN',
+      'destinationCode': 'SYD',
+      'departureTime': '2025-11-17T15:20:00',
+      'arrivalTime': '2025-11-17T22:30:00',
+      'duration': 370, // 6h 10m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'SIN',
+          'destinationCode': 'SYD',
+          'departureTime': '2025-11-17T15:20:00',
+          'arrivalTime': '2025-11-17T22:30:00',
+          'airlineCode': 'QF',
+          'airlineName': 'Qantas',
+          'aircraft': 'Boeing 787',
+          'duration': 370,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 390.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 490.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 690.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // HND to LAX (Tokyo to Los Angeles)
+    {
+      'id': 'FL006',
+      'flightNumber': 'JL005',
+      'airlineCode': 'JL',
+      'airlineName': 'Japan Airlines',
+      'originCode': 'HND',
+      'destinationCode': 'LAX',
+      'departureTime': '2025-11-18T16:45:00',
+      'arrivalTime': '2025-11-18T11:30:00',
+      'duration': 645, // 10h 45m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'HND',
+          'destinationCode': 'LAX',
+          'departureTime': '2025-11-18T16:45:00',
+          'arrivalTime': '2025-11-18T11:30:00',
+          'airlineCode': 'JL',
+          'airlineName': 'Japan Airlines',
+          'aircraft': 'Boeing 777',
+          'duration': 645,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 520.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 620.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 820.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // LAX to JFK (Los Angeles to New York)
+    {
+      'id': 'FL007',
+      'flightNumber': 'AA025',
+      'airlineCode': 'AA',
+      'airlineName': 'American Airlines',
+      'originCode': 'LAX',
+      'destinationCode': 'JFK',
+      'departureTime': '2025-11-19T08:30:00',
+      'arrivalTime': '2025-11-19T16:45:00',
+      'duration': 315, // 5h 15m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'LAX',
+          'destinationCode': 'JFK',
+          'departureTime': '2025-11-19T08:30:00',
+          'arrivalTime': '2025-11-19T16:45:00',
+          'airlineCode': 'AA',
+          'airlineName': 'American Airlines',
+          'aircraft': 'Boeing 737',
+          'duration': 315,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 280.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 380.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 580.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // JFK to FRA (New York to Frankfurt) with connection in LHR
+    {
+      'id': 'FL008',
+      'flightNumber': 'BA081',
+      'airlineCode': 'BA',
+      'airlineName': 'British Airways',
+      'originCode': 'JFK',
+      'destinationCode': 'FRA',
+      'departureTime': '2025-11-20T10:15:00',
+      'arrivalTime': '2025-11-21T08:30:00',
+      'duration': 465, // 7h 45m + layover
+      'stops': 1,
+      'segments': [
+        {
+          'originCode': 'JFK',
+          'destinationCode': 'LHR',
+          'departureTime': '2025-11-20T10:15:00',
+          'arrivalTime': '2025-11-20T22:30:00',
+          'airlineCode': 'BA',
+          'airlineName': 'British Airways',
+          'aircraft': 'Boeing 777',
+          'duration': 405,
+        },
+        {
+          'originCode': 'LHR',
+          'destinationCode': 'FRA',
+          'departureTime': '2025-11-21T06:15:00',
+          'arrivalTime': '2025-11-21T08:30:00',
+          'airlineCode': 'BA',
+          'airlineName': 'British Airways',
+          'aircraft': 'Airbus A320',
+          'duration': 90,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 480.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 580.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 780.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // FRA to DEL (Frankfurt to New Delhi)
+    {
+      'id': 'FL009',
+      'flightNumber': 'LH765',
+      'airlineCode': 'LH',
+      'airlineName': 'Lufthansa',
+      'originCode': 'FRA',
+      'destinationCode': 'DEL',
+      'departureTime': '2025-11-21T12:45:00',
+      'arrivalTime': '2025-11-22T01:30:00',
+      'duration': 525, // 8h 45m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'FRA',
+          'destinationCode': 'DEL',
+          'departureTime': '2025-11-21T12:45:00',
+          'arrivalTime': '2025-11-22T01:30:00',
+          'airlineCode': 'LH',
+          'airlineName': 'Lufthansa',
+          'aircraft': 'Airbus A380',
+          'duration': 525,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 510.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 610.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 810.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+    
+    // DEL to SIN (New Delhi to Singapore)
+    {
+      'id': 'FL010',
+      'flightNumber': 'SQ481',
+      'airlineCode': 'SQ',
+      'airlineName': 'Singapore Airlines',
+      'originCode': 'DEL',
+      'destinationCode': 'SIN',
+      'departureTime': '2025-11-22T04:20:00',
+      'arrivalTime': '2025-11-22T12:45:00',
+      'duration': 325, // 5h 25m
+      'stops': 0,
+      'segments': [
+        {
+          'originCode': 'DEL',
+          'destinationCode': 'SIN',
+          'departureTime': '2025-11-22T04:20:00',
+          'arrivalTime': '2025-11-22T12:45:00',
+          'airlineCode': 'SQ',
+          'airlineName': 'Singapore Airlines',
+          'aircraft': 'Boeing 787',
+          'duration': 325,
+        }
+      ],
+      'fareOptions': [
+        {
+          'type': 'Light',
+          'price': 290.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 0,
+          'isRefundable': false,
+          'refundPolicy': 'Non-refundable',
+        },
+        {
+          'type': 'Standard',
+          'price': 390.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 20,
+          'isRefundable': false,
+          'refundPolicy': 'Refundable with fee',
+        },
+        {
+          'type': 'Flex',
+          'price': 590.00,
+          'cabinClass': 'Economy',
+          'baggageAllowance': 30,
+          'isRefundable': true,
+          'refundPolicy': 'Fully refundable',
+        }
+      ]
+    },
+  ];
+}

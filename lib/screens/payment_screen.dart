@@ -1,6 +1,9 @@
 import 'package:booktickets/models/booking.dart';
 import 'package:booktickets/utils/app_layout.dart';
 import 'package:booktickets/utils/app_styles.dart';
+import 'package:booktickets/widgets/custom_app_bar.dart';
+import 'package:booktickets/widgets/custom_button.dart';
+import 'package:booktickets/widgets/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -76,10 +79,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
-      appBar: AppBar(
-        title: const Text('Payment'),
-        backgroundColor: Styles.secondaryColor,
-        foregroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: 'Payment',
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -95,24 +97,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
             // Payment button
             Container(
               padding: EdgeInsets.all(AppLayout.getWidth(20)),
-              child: ElevatedButton(
+              child: CustomButton(
                 onPressed: _isLoading ? null : _processPayment,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Styles.primaryColor,
-                  minimumSize: Size.fromHeight(AppLayout.getHeight(50)),
-                ),
-                child: _isLoading
-                    ? const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
-                    : Text(
-                        'Pay \$${widget.booking.totalPrice.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                text: 'Pay \$${widget.booking.totalPrice.toStringAsFixed(2)}',
+                isLoading: _isLoading,
               ),
             ),
             
@@ -134,20 +122,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Widget _buildBookingSummary() {
-    return Container(
-      margin: EdgeInsets.all(AppLayout.getWidth(15)),
-      padding: EdgeInsets.all(AppLayout.getWidth(15)),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    return CustomCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -233,20 +208,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Widget _buildPaymentForm() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
-      padding: EdgeInsets.all(AppLayout.getWidth(15)),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    return CustomCard(
       child: Form(
         key: _formKey,
         child: Column(

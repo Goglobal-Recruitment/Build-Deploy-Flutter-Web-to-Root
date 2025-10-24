@@ -4,6 +4,8 @@ import 'package:booktickets/services/flight_service.dart';
 import 'package:booktickets/utils/app_layout.dart';
 import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/widgets/column_layout.dart';
+import 'package:booktickets/widgets/custom_app_bar.dart';
+import 'package:booktickets/widgets/flight_card.dart';
 import 'package:booktickets/widgets/thick_container.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -92,11 +94,9 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Styles.bgColor,
-      appBar: AppBar(
-        title: Text(
-            '${widget.origin.code} → ${widget.destination.code}'),
-        backgroundColor: Styles.secondaryColor,
-        foregroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: '${widget.origin.code} → ${widget.destination.code}',
+        showBackButton: true,
       ),
       body: Column(
         children: [
@@ -184,7 +184,10 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
               itemCount: _filteredFlights.length,
               itemBuilder: (context, index) {
                 final flight = _filteredFlights[index];
-                return _buildFlightCard(flight);
+                return FlightCard(
+                  flight: flight,
+                  onTap: () => _showFlightDetails(flight),
+                );
               },
             ),
           ),
@@ -292,134 +295,6 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
           },
         );
       },
-    );
-  }
-
-  Widget _buildFlightCard(Flight flight) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: AppLayout.getWidth(15),
-        vertical: AppLayout.getHeight(5),
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: InkWell(
-        onTap: () => _showFlightDetails(flight),
-        child: Padding(
-          padding: EdgeInsets.all(AppLayout.getHeight(15)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Badge
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppLayout.getWidth(10),
-                  vertical: AppLayout.getHeight(5),
-                ),
-                decoration: BoxDecoration(
-                  color: flight.badgeType == 'Direct'
-                      ? Styles.successColor
-                      : flight.badgeType == 'Fastest'
-                          ? Styles.warningColor
-                          : Styles.primaryColor,
-                  borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
-                ),
-                child: Text(
-                  flight.badgeType,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Gap(AppLayout.getHeight(10)),
-              
-              // Flight info
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    flight.departureTime.formatTime(),
-                    style: Styles.headLineStyle1,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        '${flight.duration ~/ 60}h ${flight.duration % 60}m',
-                        style: Styles.headLineStyle4,
-                      ),
-                      const Icon(
-                        Icons.flight_takeoff,
-                        size: 20,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                  Text(
-                    flight.arrivalTime.formatTime(),
-                    style: Styles.headLineStyle1,
-                  ),
-                ],
-              ),
-              Gap(AppLayout.getHeight(5)),
-              
-              // Route
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    flight.originCode,
-                    style: Styles.headLineStyle3,
-                  ),
-                  const Expanded(
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
-                  ),
-                  Text(
-                    flight.destinationCode,
-                    style: Styles.headLineStyle3,
-                  ),
-                ],
-              ),
-              Gap(AppLayout.getHeight(10)),
-              
-              // Airline and flight number
-              Text(
-                '${flight.airlineName} • ${flight.flightNumber}',
-                style: Styles.headLineStyle4,
-              ),
-              Gap(AppLayout.getHeight(10)),
-              
-              // Best price
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'From \$${flight.bestPrice.toStringAsFixed(2)}',
-                    style: Styles.headLineStyle1.copyWith(
-                      color: Styles.primaryColor,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const Icon(Icons.arrow_forward_ios),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
