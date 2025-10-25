@@ -176,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen> {
               suffixIcon: Icon(Icons.calendar_today),
             ),
             controller: TextEditingController(
-              text: "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
+              text: "${_selectedDate.day.toString().padLeft(2, '0')}/${_selectedDate.month.toString().padLeft(2, '0')}/${_selectedDate.year}",
             ),
             onTap: () => _selectDate(context),
           ),

@@ -78,12 +78,9 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
       return;
     }
 
-    // We'll implement this when we create the comparison screen
-    Get.snackbar(
-      "Feature Coming Soon",
-      "Flight comparison feature will be available in the next update",
-      backgroundColor: Styles.primaryColor,
-      colorText: Colors.white,
+    Get.toNamed(
+      '/flight-comparison',
+      arguments: _selectedFlights,
     );
   }
 
@@ -125,7 +122,7 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${date.day}/${date.month}/${date.year} • $passengers Passenger${passengers > 1 ? 's' : ''} • ${_flights.length} flights found',
+                  '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year} • $passengers Passenger${passengers > 1 ? 's' : ''} • ${_flights.length} flights found',
                   style: Styles.headLineStyle3,
                 ),
                 // Sort dropdown
@@ -206,38 +203,8 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
               },
             ),
           ),
-          
-          // Show comparison bar when flights are selected
-          if (_selectedFlights.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.all(10),
-              color: Styles.primaryColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${_selectedFlights.length} flight${_selectedFlights.length > 1 ? 's' : ''} selected',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  ElevatedButton(
-                    onPressed: _compareFlights,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Styles.primaryColor,
-                    ),
-                    child: const Text('Compare'),
-                  ),
-                ],
-              ),
-            ),
         ],
       ),
     );
-  }
-}
-
-extension on DateTime {
-  String formatTime() {
-    return '${this.hour.toString().padLeft(2, '0')}:${this.minute.toString().padLeft(2, '0')}';
   }
 }

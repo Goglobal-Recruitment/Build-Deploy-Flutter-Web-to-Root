@@ -95,7 +95,7 @@ class _PassengerInfoScreenState extends State<PassengerInfoScreen> {
       lastDate: DateTime.now().subtract(const Duration(days: 365 * 12)),
     );
     if (picked != null) {
-      controller.text = "${picked.day}/${picked.month}/${picked.year}";
+      controller.text = "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
     }
   }
 
@@ -256,14 +256,15 @@ class _PassengerInfoScreenState extends State<PassengerInfoScreen> {
                             controller: _passengersControllers[i]['email'],
                             decoration: const InputDecoration(
                               labelText: 'Email Address *',
+                              prefixIcon: const Icon(Icons.email),
                             ),
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter email address';
                               }
-                              if (!GetUtils.isEmail(value)) {
-                                return 'Please enter a valid email';
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                                return 'Please enter a valid email address';
                               }
                               return null;
                             },
@@ -275,6 +276,7 @@ class _PassengerInfoScreenState extends State<PassengerInfoScreen> {
                             controller: _passengersControllers[i]['phone'],
                             decoration: const InputDecoration(
                               labelText: 'Phone Number *',
+                              prefixIcon: const Icon(Icons.phone),
                             ),
                             keyboardType: TextInputType.phone,
                             validator: (value) {
@@ -291,9 +293,7 @@ class _PassengerInfoScreenState extends State<PassengerInfoScreen> {
                 ),
               ),
             
-            Gap(AppLayout.getHeight(20)),
-            
-            // Proceed button
+            // Proceed to payment button
             Container(
               margin: EdgeInsets.all(AppLayout.getWidth(20)),
               child: CustomButton(
@@ -309,6 +309,10 @@ class _PassengerInfoScreenState extends State<PassengerInfoScreen> {
 }
 
 extension on DateTime {
+  String formatTime() {
+    return '${this.hour.toString().padLeft(2, '0')}:${this.minute.toString().padLeft(2, '0')}';
+  }
+  
   String formatDate() {
     return '${this.day.toString().padLeft(2, '0')}/${this.month.toString().padLeft(2, '0')}/${this.year}';
   }
