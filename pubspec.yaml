@@ -12,13 +12,13 @@ dependencies:
     sdk: flutter
 
   # UI packages
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.8
   fluentui_icons: ^1.0.0
-  gap: ^2.0.0
-  get: ^4.6.5
+  gap: ^3.0.1
+  get: ^4.7.2
 
   # Barcode display
-  barcode_widget: ^2.0.2
+  barcode_widget: ^2.0.4
 
   # Networking for API calls
   http: ^1.2.1
@@ -33,7 +33,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.3
 
 flutter:
   uses-material-design: true

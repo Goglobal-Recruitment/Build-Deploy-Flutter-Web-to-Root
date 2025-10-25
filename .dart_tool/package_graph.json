@@ -24,7 +24,7 @@
     },
     {
       "name": "flutter_lints",
-      "version": "2.0.1",
+      "version": "2.0.3",
       "dependencies": [
         "lints"
       ]
@@ -78,7 +78,7 @@
     },
     {
       "name": "barcode_widget",
-      "version": "2.0.3",
+      "version": "2.0.4",
       "dependencies": [
         "barcode",
         "flutter"
@@ -86,14 +86,15 @@
     },
     {
       "name": "get",
-      "version": "4.6.5",
+      "version": "4.7.2",
       "dependencies": [
-        "flutter"
+        "flutter",
+        "web"
       ]
     },
     {
       "name": "gap",
-      "version": "2.0.1",
+      "version": "3.0.1",
       "dependencies": [
         "flutter"
       ]
@@ -107,7 +108,7 @@
     },
     {
       "name": "cupertino_icons",
-      "version": "1.0.5",
+      "version": "1.0.8",
       "dependencies": []
     },
     {
@@ -124,7 +125,7 @@
     },
     {
       "name": "lints",
-      "version": "2.0.1",
+      "version": "2.1.1",
       "dependencies": []
     },
     {
@@ -269,7 +270,7 @@
     },
     {
       "name": "async",
-      "version": "2.10.0",
+      "version": "2.13.0",
       "dependencies": [
         "collection",
         "meta"
@@ -277,7 +278,7 @@
     },
     {
       "name": "barcode",
-      "version": "2.2.3",
+      "version": "2.2.9",
       "dependencies": [
         "meta",
         "qr"
@@ -322,19 +323,19 @@
     },
     {
       "name": "term_glyph",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": []
     },
     {
       "name": "string_scanner",
-      "version": "1.2.0",
+      "version": "1.4.1",
       "dependencies": [
         "source_span"
       ]
     },
     {
       "name": "source_span",
-      "version": "1.9.1",
+      "version": "1.10.1",
       "dependencies": [
         "collection",
         "path",
@@ -343,7 +344,7 @@
     },
     {
       "name": "boolean_selector",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "dependencies": [
         "source_span",
         "string_scanner"
@@ -444,7 +445,7 @@
     },
     {
       "name": "qr",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "dependencies": [
         "meta"
       ]

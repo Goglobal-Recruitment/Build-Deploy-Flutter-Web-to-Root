@@ -3,27 +3,27 @@
   "packages": [
     {
       "name": "async",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.10.0",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.13.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.4"
     },
     {
       "name": "barcode",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/barcode-2.2.3",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/barcode-2.2.9",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "barcode_widget",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/barcode_widget-2.0.3",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/barcode_widget-2.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "boolean_selector",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.1"
     },
     {
       "name": "characters",
@@ -51,9 +51,9 @@
     },
     {
       "name": "cupertino_icons",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.8",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.1"
     },
     {
       "name": "fake_async",
@@ -81,9 +81,9 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.19"
     },
     {
       "name": "flutter_test",
@@ -99,13 +99,13 @@
     },
     {
       "name": "gap",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/gap-2.0.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/gap-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "get",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.6.5",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.7.2",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -141,9 +141,9 @@
     },
     {
       "name": "lints",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "matcher",
@@ -183,9 +183,9 @@
     },
     {
       "name": "qr",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/qr-3.0.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/qr-3.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.16"
+      "languageVersion": "3.4"
     },
     {
       "name": "sky_engine",
@@ -195,9 +195,9 @@
     },
     {
       "name": "source_span",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.1"
     },
     {
       "name": "sprintf",
@@ -219,15 +219,15 @@
     },
     {
       "name": "string_scanner",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.1"
     },
     {
       "name": "term_glyph",
-      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
+      "rootUri": "file:///C:/Users/nikpil/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.1"
     },
     {
       "name": "test_api",

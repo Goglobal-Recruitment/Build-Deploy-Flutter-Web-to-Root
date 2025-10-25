@@ -396,8 +396,7 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
               margin: EdgeInsets.all(AppLayout.getWidth(20)),
               child: CustomButton(
                 text: 'Continue to Passenger Info',
-                onPressed: _continueToPassengerInfo,
-                isEnabled: _selectedFare != null,
+                onPressed: _selectedFare != null ? _continueToPassengerInfo : null,
               ),
             ),
           ],
