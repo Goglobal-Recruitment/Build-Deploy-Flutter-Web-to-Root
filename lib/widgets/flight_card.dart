@@ -40,9 +40,9 @@ class FlightCard extends StatelessWidget {
             if (flight.badgeType != null)
               BadgeWidget(
                 text: flight.badgeType!,
-                color: flight.badgeType == 'DIRECT'
+                color: flight.badgeType == 'Direct'
                     ? Styles.successColor
-                    : flight.badgeType == 'FASTEST'
+                    : flight.badgeType == 'Fastest'
                         ? Styles.warningColor
                         : Styles.primaryColor,
               ),
@@ -117,18 +117,54 @@ class FlightCard extends StatelessWidget {
                   '${flight.airlineName} • ${flight.flightNumber}',
                   style: Styles.headLineStyle3,
                 ),
-                // Best price
-                Text(
-                  'From R${flight.bestPrice.toStringAsFixed(2)}',
-                  style: Styles.headLineStyle1.copyWith(
-                    color: Styles.primaryColor,
-                  ),
+                // Best price with cabin info
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'From R${flight.bestPrice.toStringAsFixed(2)}',
+                      style: Styles.headLineStyle1.copyWith(
+                        color: Styles.primaryColor,
+                      ),
+                    ),
+                    Text(
+                      flight.fareOptions.first.cabinClass,
+                      style: Styles.headLineStyle4,
+                    ),
+                  ],
                 ),
               ],
             ),
+            
+            Gap(AppLayout.getHeight(10)),
+            
+            // Fare options preview
+            if (flight.fareOptions.length > 1)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${flight.fareOptions.length} fare options available',
+                    style: Styles.headLineStyle4.copyWith(
+                      color: Styles.primaryColor,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
           ],
         ),
       ),
     );
+  }
+}
+
+extension on DateTime {
+  String formatTime() {
+    return '${this.hour.toString().padLeft(2, '0')}:${this.minute.toString().padLeft(2, '0')}';
   }
 }

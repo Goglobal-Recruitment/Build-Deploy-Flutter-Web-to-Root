@@ -26,6 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Airport? _selectedDestination;
   DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
   int _passengers = 1;
+  String _selectedCabinClass = 'Economy';
 
   @override
   void initState() {
@@ -62,13 +63,20 @@ class _SearchScreenState extends State<SearchScreen> {
       return;
     }
 
-    // Navigate to results screen
+    // Navigate to results screen with all search parameters
     Get.to(() => FlightResultsScreen(
-          origin: _selectedOrigin!,
-          destination: _selectedDestination!,
-          date: _selectedDate,
-          passengers: _passengers,
+          searchParams: {
+            'originCode': _selectedOrigin!.code,
+            'destinationCode': _selectedDestination!.code,
+            'date': _selectedDate,
+            'passengers': _passengers,
+            'cabinClass': _selectedCabinClass,
+          },
         ));
+  }
+
+  void _goToAdvancedSearch() {
+    Get.toNamed('/advanced-search');
   }
 
   @override
@@ -129,6 +137,29 @@ class _SearchScreenState extends State<SearchScreen> {
             onChanged: (Airport? newValue) {
               setState(() {
                 _selectedDestination = newValue;
+              });
+            },
+          ),
+          Gap(AppLayout.getHeight(20)),
+          
+          // Cabin class selection
+          const AppIconText(icon: Icons.airline_seat_recline_normal, text: "Cabin Class"),
+          Gap(AppLayout.getHeight(10)),
+          DropdownButtonFormField<String>(
+            value: _selectedCabinClass,
+            decoration: const InputDecoration(
+              labelText: "Select Cabin Class",
+              border: OutlineInputBorder(),
+            ),
+            items: const [
+              DropdownMenuItem(value: 'Economy', child: Text('Economy')),
+              DropdownMenuItem(value: 'Premium Economy', child: Text('Premium Economy')),
+              DropdownMenuItem(value: 'Business', child: Text('Business')),
+              DropdownMenuItem(value: 'First', child: Text('First')),
+            ],
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedCabinClass = newValue!;
               });
             },
           ),
@@ -205,7 +236,20 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ),
-          Gap(AppLayout.getHeight(40)),
+          Gap(AppLayout.getHeight(15)),
+          
+          // Advanced search link
+          TextButton(
+            onPressed: _goToAdvancedSearch,
+            child: Text(
+              "Advanced Search Options",
+              style: Styles.headLineStyle4.copyWith(
+                color: Styles.primaryColor,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+          Gap(AppLayout.getHeight(25)),
           
           // Promotional content
           const AppDoubleTextWidget(

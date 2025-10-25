@@ -160,6 +160,85 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                       ],
                     ),
                   ),
+                  
+                  Gap(AppLayout.getHeight(15)),
+                  
+                  // Segments details (for flights with stops)
+                  if (widget.flight.segments.length > 1) ...[
+                    Text(
+                      'Flight Segments',
+                      style: Styles.headLineStyle2,
+                    ),
+                    Gap(AppLayout.getHeight(10)),
+                    for (int i = 0; i < widget.flight.segments.length; i++)
+                      Container(
+                        margin: EdgeInsets.only(bottom: AppLayout.getHeight(10)),
+                        padding: EdgeInsets.all(AppLayout.getWidth(10)),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Segment ${i + 1}',
+                              style: Styles.headLineStyle3,
+                            ),
+                            Gap(AppLayout.getHeight(5)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.flight.segments[i].departureTime.formatTime(),
+                                      style: Styles.headLineStyle4,
+                                    ),
+                                    Text(
+                                      widget.flight.segments[i].originCode,
+                                      style: Styles.headLineStyle3,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      '${widget.flight.segments[i].duration ~/ 60}h ${widget.flight.segments[i].duration % 60}m',
+                                      style: Styles.headLineStyle4,
+                                    ),
+                                    const Icon(
+                                      Icons.flight_takeoff,
+                                      size: 20,
+                                      color: Colors.blue,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      widget.flight.segments[i].arrivalTime.formatTime(),
+                                      style: Styles.headLineStyle4,
+                                    ),
+                                    Text(
+                                      widget.flight.segments[i].destinationCode,
+                                      style: Styles.headLineStyle3,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Gap(AppLayout.getHeight(5)),
+                            Text(
+                              '${widget.flight.segments[i].airlineName} • ${widget.flight.segments[i].aircraft}',
+                              style: Styles.headLineStyle4,
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                 ],
               ),
             ),
@@ -208,7 +287,7 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                           // Fare header
                           ListTile(
                             title: Text(
-                              fare.type,
+                              '${fare.type} (${fare.cabinClass})',
                               style: Styles.headLineStyle3.copyWith(
                                 color: _selectedFare == fare
                                     ? Styles.successColor
@@ -275,14 +354,10 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                                 Gap(AppLayout.getHeight(10)),
                                 Row(
                                   children: [
-                                    Icon(
-                                      fare.isRefundable
-                                          ? Icons.check_circle
-                                          : Icons.cancel,
+                                    const Icon(
+                                      Icons.airline_seat_recline_normal,
                                       size: 16,
-                                      color: fare.isRefundable
-                                          ? Styles.successColor
-                                          : Styles.errorColor,
+                                      color: Colors.grey,
                                     ),
                                     Gap(AppLayout.getWidth(5)),
                                     Text(

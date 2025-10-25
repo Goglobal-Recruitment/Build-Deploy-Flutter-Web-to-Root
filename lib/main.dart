@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:booktickets/screens/bottom_bar.dart';
+import 'package:booktickets/screens/search_screen.dart';
+import 'package:booktickets/screens/advanced_search_screen.dart';
+import 'package:booktickets/screens/flight_results_screen.dart';
+import 'package:booktickets/screens/flight_details_screen.dart';
+import 'package:booktickets/screens/flight_comparison_screen.dart';
+import 'package:booktickets/screens/passenger_info_screen.dart';
+import 'package:booktickets/screens/payment_screen.dart';
+import 'package:booktickets/screens/booking_confirmation_screen.dart';
+import 'package:booktickets/screens/manage_bookings_screen.dart';
 import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/services/payment_service.dart';
 
@@ -48,6 +57,44 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const BottomBar(),
+      getPages: [
+        GetPage(name: '/', page: () => const BottomBar()),
+        GetPage(name: '/search', page: () => const SearchScreen()),
+        GetPage(name: '/advanced-search', page: () => const AdvancedSearchScreen()),
+        GetPage(name: '/flight-results', page: () {
+          final args = Get.arguments as Map<String, dynamic>? ?? {};
+          return FlightResultsScreen(searchParams: args);
+        }),
+        GetPage(name: '/flight-details', page: () {
+          final flight = Get.arguments;
+          return FlightDetailsScreen(flight: flight);
+        }),
+        GetPage(name: '/flight-comparison', page: () {
+          final flights = Get.arguments as List;
+          return FlightComparisonScreen(flights: flights);
+        }),
+        GetPage(name: '/passenger-info', page: () {
+          final args = Get.arguments as Map<String, dynamic>;
+          return PassengerInfoScreen(
+            flight: args['flight'],
+            selectedFare: args['selectedFare'],
+            passengerCount: 1,
+          );
+        }),
+        GetPage(name: '/payment', page: () {
+          final args = Get.arguments as Map<String, dynamic>;
+          return PaymentScreen(
+            flight: args['flight'],
+            selectedFare: args['selectedFare'],
+            passengers: args['passengers'],
+          );
+        }),
+        GetPage(name: '/booking-confirmation', page: () {
+          final booking = Get.arguments;
+          return BookingConfirmationScreen(booking: booking);
+        }),
+        GetPage(name: '/manage-bookings', page: () => const ManageBookingsScreen()),
+      ],
     );
   }
 }

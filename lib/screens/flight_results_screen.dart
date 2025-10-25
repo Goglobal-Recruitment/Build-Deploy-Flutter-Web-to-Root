@@ -21,11 +21,16 @@ class FlightResultsScreen extends StatefulWidget {
 class _FlightResultsScreenState extends State<FlightResultsScreen> {
   late List<Flight> _flights;
   FlightSortOption _sortOption = FlightSortOption.priceLowToHigh;
+  String _selectedCabinClass = 'Economy';
+  int _stopsFilter = -1; // -1 for all, 0 for direct, 1 for 1 stop, etc.
+  double _minPrice = 0;
+  double _maxPrice = 50000;
   final FlightService _flightService = FlightService();
 
   @override
   void initState() {
     super.initState();
+    _selectedCabinClass = widget.searchParams['cabinClass'] ?? 'Economy';
     _searchFlights();
   }
 
@@ -37,7 +42,28 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
       passengers: widget.searchParams['passengers'],
     );
 
-    _flights = _flightService.sortFlights(flights, _sortOption);
+    // Apply filters
+    List<Flight> filteredFlights = flights;
+    
+    // Filter by cabin class
+    if (_selectedCabinClass != 'All') {
+      filteredFlights = filteredFlights.where((flight) {
+        return flight.fareOptions.any((fare) => fare.cabinClass == _selectedCabinClass);
+      }).toList();
+    }
+    
+    // Filter by stops
+    if (_stopsFilter >= 0) {
+      filteredFlights = filteredFlights.where((flight) => flight.stops == _stopsFilter).toList();
+    }
+    
+    // Filter by price range
+    filteredFlights = filteredFlights.where((flight) {
+      double bestPrice = flight.bestPrice;
+      return bestPrice >= _minPrice && bestPrice <= _maxPrice;
+    }).toList();
+
+    _flights = _flightService.sortFlights(filteredFlights, _sortOption);
     setState(() {});
   }
 
@@ -55,12 +81,177 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
     );
   }
 
+  void _showFilters() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              padding: EdgeInsets.all(AppLayout.getHeight(20)),
+              height: MediaQuery.of(context).size.height * 0.6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Filters',
+                    style: Styles.headLineStyle1,
+                  ),
+                  Gap(AppLayout.getHeight(20)),
+                  
+                  // Cabin class filter
+                  Text(
+                    'Cabin Class',
+                    style: Styles.headLineStyle2,
+                  ),
+                  Gap(AppLayout.getHeight(10)),
+                  Wrap(
+                    spacing: AppLayout.getWidth(10),
+                    children: [
+                      'All',
+                      'Economy',
+                      'Premium Economy',
+                      'Business',
+                      'First'
+                    ].map((cabin) {
+                      return ChoiceChip(
+                        label: Text(cabin),
+                        selected: _selectedCabinClass == cabin,
+                        onSelected: (selected) {
+                          setModalState(() {
+                            _selectedCabinClass = selected ? cabin : 'All';
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  Gap(AppLayout.getHeight(20)),
+                  
+                  // Stops filter
+                  Text(
+                    'Stops',
+                    style: Styles.headLineStyle2,
+                  ),
+                  Gap(AppLayout.getHeight(10)),
+                  Wrap(
+                    spacing: AppLayout.getWidth(10),
+                    children: [
+                      FilterChip(
+                        label: const Text('All'),
+                        selected: _stopsFilter == -1,
+                        onSelected: (selected) {
+                          setModalState(() {
+                            _stopsFilter = selected ? -1 : _stopsFilter;
+                          });
+                        },
+                      ),
+                      FilterChip(
+                        label: const Text('Direct'),
+                        selected: _stopsFilter == 0,
+                        onSelected: (selected) {
+                          setModalState(() {
+                            _stopsFilter = selected ? 0 : _stopsFilter;
+                          });
+                        },
+                      ),
+                      FilterChip(
+                        label: const Text('1 Stop'),
+                        selected: _stopsFilter == 1,
+                        onSelected: (selected) {
+                          setModalState(() {
+                            _stopsFilter = selected ? 1 : _stopsFilter;
+                          });
+                        },
+                      ),
+                      FilterChip(
+                        label: const Text('2+ Stops'),
+                        selected: _stopsFilter >= 2,
+                        onSelected: (selected) {
+                          setModalState(() {
+                            _stopsFilter = selected ? 2 : _stopsFilter;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Gap(AppLayout.getHeight(20)),
+                  
+                  // Price range filter
+                  Text(
+                    'Price Range',
+                    style: Styles.headLineStyle2,
+                  ),
+                  Gap(AppLayout.getHeight(10)),
+                  RangeSlider(
+                    values: RangeValues(_minPrice, _maxPrice),
+                    min: 0,
+                    max: 50000,
+                    divisions: 100,
+                    labels: RangeLabels(
+                      'R${_minPrice.round()}',
+                      'R${_maxPrice.round()}',
+                    ),
+                    onChanged: (RangeValues values) {
+                      setModalState(() {
+                        _minPrice = values.start;
+                        _maxPrice = values.end;
+                      });
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('R${_minPrice.round()}'),
+                      Text('R${_maxPrice.round()}'),
+                    ],
+                  ),
+                  Gap(AppLayout.getHeight(20)),
+                  
+                  // Apply and Reset buttons
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            setModalState(() {
+                              _selectedCabinClass = 'All';
+                              _stopsFilter = -1;
+                              _minPrice = 0;
+                              _maxPrice = 50000;
+                            });
+                          },
+                          child: Text('Reset'),
+                        ),
+                      ),
+                      Gap(AppLayout.getWidth(10)),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _searchFlights();
+                          },
+                          child: Text('Apply'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final originCode = widget.searchParams['originCode'];
     final destinationCode = widget.searchParams['destinationCode'];
     final date = widget.searchParams['date'] as DateTime;
     final passengers = widget.searchParams['passengers'];
+    final cabinClass = widget.searchParams['cabinClass'] ?? 'Economy';
 
     return Scaffold(
       backgroundColor: Styles.bgColor,
@@ -119,17 +310,69 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
             ),
           ),
           
+          // Filters bar
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(15)),
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton.icon(
+                  onPressed: _showFilters,
+                  icon: const Icon(Icons.filter_list),
+                  label: Text('Filters'),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _selectedCabinClass = 'All';
+                      _stopsFilter = -1;
+                      _minPrice = 0;
+                      _maxPrice = 50000;
+                      _searchFlights();
+                    });
+                  },
+                  icon: const Icon(Icons.refresh),
+                  label: Text('Reset'),
+                ),
+              ],
+            ),
+          ),
+          
           // Flight list
           Expanded(
-            child: ListView.builder(
-              itemCount: _flights.length,
-              itemBuilder: (context, index) {
-                return FlightCard(
-                  flight: _flights[index],
-                  onTap: () => _openFlightDetails(_flights[index]),
-                );
-              },
-            ),
+            child: _flights.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 60,
+                          color: Colors.grey,
+                        ),
+                        Gap(AppLayout.getHeight(20)),
+                        Text(
+                          'No flights found',
+                          style: Styles.headLineStyle2,
+                        ),
+                        Gap(AppLayout.getHeight(10)),
+                        Text(
+                          'Try adjusting your filters',
+                          style: Styles.headLineStyle4,
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: _flights.length,
+                    itemBuilder: (context, index) {
+                      return FlightCard(
+                        flight: _flights[index],
+                        onTap: () => _openFlightDetails(_flights[index]),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
