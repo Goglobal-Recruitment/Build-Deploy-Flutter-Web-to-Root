@@ -7,12 +7,19 @@
 ///
 /// For development and testing purposes, you can use placeholder values
 /// but remember to replace them with actual keys before deployment.
+///
+/// To use real flight data:
+/// 1. Get a free API key from https://serpapi.com/
+/// 2. Get Paystack test keys from https://paystack.com/
+/// 3. Replace the placeholder values below with your actual keys
 
 class EnvConfig {
-  // SerpApi Configuration
+  // SerpApi Configuration - REPLACE WITH YOUR ACTUAL KEY
+  // Get your free key at: https://serpapi.com/
   static const String serpApiKey = 'YOUR_SERPAPI_KEY_HERE';
   
-  // Paystack Configuration
+  // Paystack Configuration - REPLACE WITH YOUR ACTUAL KEYS
+  // Get your test keys at: https://paystack.com/
   static const String paystackPublicKey = 'pk_test_your_paystack_public_key_here';
   static const String paystackSecretKey = 'sk_test_your_paystack_secret_key_here';
   

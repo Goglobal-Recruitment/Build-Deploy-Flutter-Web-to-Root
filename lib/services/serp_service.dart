@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:booktickets/utils/env_config.dart';
+import '../utils/env_config.dart';
 
 class SerpService {
   /// Search for flights using SerpApi
@@ -11,6 +11,13 @@ class SerpService {
     int passengers = 1,
   }) async {
     try {
+      // Check if API key is configured
+      if (EnvConfig.serpApiKey == 'YOUR_SERPAPI_KEY_HERE' || 
+          EnvConfig.serpApiKey.isEmpty) {
+        // Return mock data if no API key is configured
+        return _getMockFlights(origin, destination, date, passengers);
+      }
+
       final response = await http.get(
         Uri.parse(
           '${EnvConfig.serpApiBaseUrl}?engine=google_flights&'
@@ -30,7 +37,8 @@ class SerpService {
           return List<Map<String, dynamic>>.from(data['best_flights']);
         }
       }
-      return [];
+      // Return mock data if API call fails
+      return _getMockFlights(origin, destination, date, passengers);
     } catch (e) {
       // Return mock data if API fails
       return _getMockFlights(origin, destination, date, passengers);
@@ -40,6 +48,12 @@ class SerpService {
   /// Get airline information using SerpApi
   static Future<Map<String, dynamic>?> getAirlineInfo(String airlineName) async {
     try {
+      // Check if API key is configured
+      if (EnvConfig.serpApiKey == 'YOUR_SERPAPI_KEY_HERE' || 
+          EnvConfig.serpApiKey.isEmpty) {
+        return null;
+      }
+
       final response = await http.get(
         Uri.parse(
           '${EnvConfig.serpApiBaseUrl}?engine=google&'
@@ -65,6 +79,24 @@ class SerpService {
     String date,
     int passengers,
   ) {
+    // Parse the date to ensure we use current/future dates
+    DateTime searchDate;
+    try {
+      List<String> dateParts = date.split('-');
+      searchDate = DateTime(
+        int.parse(dateParts[0]), 
+        int.parse(dateParts[1]), 
+        int.parse(dateParts[2])
+      );
+    } catch (e) {
+      searchDate = DateTime.now().add(Duration(days: 7)); // Default to next week
+    }
+
+    // Ensure we don't use dates in the past
+    if (searchDate.isBefore(DateTime.now())) {
+      searchDate = DateTime.now().add(Duration(days: 1));
+    }
+
     return [
       {
         'airline': 'South African Airways',
@@ -74,6 +106,9 @@ class SerpService {
         'duration': '6h 30m',
         'price': 7500.00,
         'stops': 0,
+        'origin': origin,
+        'destination': destination,
+        'date': searchDate.toIso8601String().split('T')[0],
       },
       {
         'airline': 'British Airways',
@@ -83,6 +118,9 @@ class SerpService {
         'duration': '7h 45m',
         'price': 8200.00,
         'stops': 0,
+        'origin': origin,
+        'destination': destination,
+        'date': searchDate.toIso8601String().split('T')[0],
       },
       {
         'airline': 'Emirates',
@@ -92,6 +130,33 @@ class SerpService {
         'duration': '10h 45m',
         'price': 9800.00,
         'stops': 1,
+        'origin': origin,
+        'destination': destination,
+        'date': searchDate.toIso8601String().split('T')[0],
+      },
+      {
+        'airline': 'Qatar Airways',
+        'flight_number': 'QR321',
+        'departure_time': '22:00',
+        'arrival_time': '12:30',
+        'duration': '14h 30m',
+        'price': 11500.00,
+        'stops': 1,
+        'origin': origin,
+        'destination': destination,
+        'date': searchDate.toIso8601String().split('T')[0],
+      },
+      {
+        'airline': 'Lufthansa',
+        'flight_number': 'LH654',
+        'departure_time': '06:30',
+        'arrival_time': '18:45',
+        'duration': '12h 15m',
+        'price': 9200.00,
+        'stops': 1,
+        'origin': origin,
+        'destination': destination,
+        'date': searchDate.toIso8601String().split('T')[0],
       },
     ];
   }
