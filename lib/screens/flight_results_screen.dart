@@ -1,12 +1,11 @@
-import 'package:booktickets/models/airport.dart';
-import 'package:booktickets/models/flight.dart';
-import 'package:booktickets/services/flight_service.dart';
-import 'package:booktickets/utils/app_layout.dart';
-import 'package:booktickets/utils/app_styles.dart';
-import 'package:booktickets/widgets/flight_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import '../models/flight.dart';
+import '../services/flight_service.dart';
+import '../utils/app_layout.dart';
+import '../utils/app_styles.dart';
+import '../widgets/flight_card.dart';
 
 class FlightResultsScreen extends StatefulWidget {
   final Map<String, dynamic> searchParams;
@@ -20,6 +19,7 @@ class FlightResultsScreen extends StatefulWidget {
 
 class _FlightResultsScreenState extends State<FlightResultsScreen> {
   late List<Flight> _flights;
+  List<Flight> _selectedFlights = [];
   FlightSortOption _sortOption = FlightSortOption.priceLowToHigh;
   String _selectedCabinClass = 'Economy';
   int _stopsFilter = -1; // -1 for all, 0 for direct, 1 for 1 stop, etc.
@@ -78,6 +78,33 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
     Get.toNamed(
       '/flight-details',
       arguments: flight,
+    );
+  }
+
+  void _toggleFlightSelection(Flight flight) {
+    setState(() {
+      if (_selectedFlights.contains(flight)) {
+        _selectedFlights.remove(flight);
+      } else {
+        _selectedFlights.add(flight);
+      }
+    });
+  }
+
+  void _compareFlights() {
+    if (_selectedFlights.length < 2) {
+      Get.snackbar(
+        "Selection Required",
+        "Please select at least 2 flights to compare",
+        backgroundColor: Styles.warningColor,
+        colorText: Colors.white,
+      );
+      return;
+    }
+    
+    Get.toNamed(
+      '/flight-comparison',
+      arguments: _selectedFlights,
     );
   }
 
@@ -265,6 +292,13 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Get.back(),
         ),
+        actions: [
+          if (_selectedFlights.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.compare, color: Colors.white),
+              onPressed: _compareFlights,
+            ),
+        ],
       ),
       body: Column(
         children: [
@@ -367,13 +401,72 @@ class _FlightResultsScreenState extends State<FlightResultsScreen> {
                 : ListView.builder(
                     itemCount: _flights.length,
                     itemBuilder: (context, index) {
-                      return FlightCard(
-                        flight: _flights[index],
-                        onTap: () => _openFlightDetails(_flights[index]),
+                      final flight = _flights[index];
+                      final isSelected = _selectedFlights.contains(flight);
+                      
+                      return Stack(
+                        children: [
+                          FlightCard(
+                            flight: flight,
+                            onTap: () => _openFlightDetails(flight),
+                          ),
+                          // Selection indicator
+                          if (isSelected)
+                            Positioned(
+                              top: AppLayout.getHeight(10),
+                              right: AppLayout.getWidth(10),
+                              child: Container(
+                                padding: EdgeInsets.all(AppLayout.getWidth(5)),
+                                decoration: const BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          // Selection overlay
+                          Positioned.fill(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () => _toggleFlightSelection(flight),
+                                borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),
           ),
+          
+          // Comparison bar (only shown when flights are selected)
+          if (_selectedFlights.isNotEmpty)
+            Container(
+              padding: EdgeInsets.all(AppLayout.getHeight(10)),
+              color: Styles.primaryColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${_selectedFlights.length} flight${_selectedFlights.length > 1 ? 's' : ''} selected',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  ElevatedButton(
+                    onPressed: _compareFlights,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Styles.primaryColor,
+                    ),
+                    child: const Text('Compare'),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
