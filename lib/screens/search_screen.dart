@@ -325,7 +325,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     Gap(AppLayout.getHeight(12)),
                     Text(
-                      "Refer a friend, get \$50",
+                      "Refer a friend, get R50",
                       style: Styles.headLineStyle2,
                       textAlign: TextAlign.center,
                     )
