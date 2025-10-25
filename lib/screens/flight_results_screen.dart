@@ -1,11 +1,11 @@
+import 'package:booktickets/models/flight.dart';
+import 'package:booktickets/services/flight_service.dart';
+import 'package:booktickets/utils/app_layout.dart';
+import 'package:booktickets/utils/app_styles.dart';
+import 'package:booktickets/widgets/flight_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import '../models/flight.dart';
-import '../services/flight_service.dart';
-import '../utils/app_layout.dart';
-import '../utils/app_styles.dart';
-import '../widgets/flight_card.dart';
 
 class FlightResultsScreen extends StatefulWidget {
   final Map<String, dynamic> searchParams;
