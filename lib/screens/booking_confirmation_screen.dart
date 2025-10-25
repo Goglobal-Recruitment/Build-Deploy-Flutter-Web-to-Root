@@ -373,7 +373,7 @@ class BookingConfirmationScreen extends StatelessWidget {
                   OutlinedButton(
                     onPressed: _goToHome,
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Styles.primaryColor),
+                      side: BorderSide(color: Styles.primaryColor),
                       minimumSize: Size.fromHeight(AppLayout.getHeight(50)),
                     ),
                     child: Text(

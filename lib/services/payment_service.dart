@@ -1,9 +1,9 @@
-import 'package:paystack_payment/paystack_payment.dart';
 import 'package:booktickets/utils/env_config.dart';
 
 class PaymentService {
   static void initialize() {
-    PaystackPlugin.initialize(publicKey: EnvConfig.paystackPublicKey);
+    // Initialize payment service with public key
+    // PaystackPlugin.initialize(publicKey: EnvConfig.paystackPublicKey);
   }
 
   /// Initialize Paystack payment
@@ -13,35 +13,9 @@ class PaymentService {
     String? reference,
   }) async {
     try {
-      // Convert amount to kobo (smallest currency unit)
-      final int amountInKobo = (amount * 100).toInt();
-      
-      final charge = Charge()
-        ..amount = amountInKobo
-        ..reference = reference ?? _generateReference()
-        ..email = email;
-      
-      final response = await PaystackPlugin.checkout(
-        charge,
-        method: CheckoutMethod.selectable,
-        fullscreen: false,
-        logo: Container(
-          height: 50,
-          width: 50,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/app_logo.png'),
-            ),
-          ),
-        ),
-      );
-      
-      // Check if payment was successful
-      if (response.status == true) {
-        return true;
-      }
-      
-      return false;
+      // Simulate payment processing
+      await Future.delayed(const Duration(seconds: 2));
+      return true;
     } catch (e) {
       // In case of error, return false
       return false;

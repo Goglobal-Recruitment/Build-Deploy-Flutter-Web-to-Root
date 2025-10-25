@@ -3,7 +3,7 @@ import 'package:booktickets/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
   final Color? backgroundColor;
   final Color? textColor;
@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton({
     Key? key,
-    required this.onPressed,
+    this.onPressed,
     required this.text,
     this.backgroundColor,
     this.textColor,
@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
       width: width,
       height: height ?? AppLayout.getHeight(50),
       child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
+        onPressed: isLoading || onPressed == null ? null : () => onPressed!(),
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? Styles.primaryColor,
           shape: RoundedRectangleBorder(

@@ -152,7 +152,7 @@ class _PassengerInfoScreenState extends State<PassengerInfoScreen> {
                     style: Styles.headLineStyle4,
                   ),
                   Text(
-                    '$passengerCount Passenger${passengerCount > 1 ? 's' : ''} • ${widget.selectedFare.type} Fare',
+                    '${widget.passengerCount} Passenger${widget.passengerCount > 1 ? 's' : ''} • ${widget.selectedFare.type} Fare',
                     style: Styles.headLineStyle4,
                   ),
                   Gap(AppLayout.getHeight(10)),

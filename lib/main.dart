@@ -12,6 +12,7 @@ import 'package:booktickets/screens/booking_confirmation_screen.dart';
 import 'package:booktickets/screens/manage_bookings_screen.dart';
 import 'package:booktickets/utils/app_styles.dart';
 import 'package:booktickets/services/payment_service.dart';
+import 'package:booktickets/models/flight.dart';
 
 // Define primary and secondary colors
 const Color primary = Color(0xFF1D6ED6);
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
         }),
         GetPage(name: '/flight-comparison', page: () {
           final flights = Get.arguments as List;
-          return FlightComparisonScreen(flights: flights);
+          return FlightComparisonScreen(flights: flights.cast<Flight>());
         }),
         GetPage(name: '/passenger-info', page: () {
           final args = Get.arguments as Map<String, dynamic>;

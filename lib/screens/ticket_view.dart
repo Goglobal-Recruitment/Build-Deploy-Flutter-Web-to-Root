@@ -83,7 +83,7 @@ class TicketView extends StatelessWidget {
             showing the orange part of the card/ticket
              */
             Container(
-              color:isColor==null?Styles.orangeColor:Colors.white,//const Color(0xFFF37B67),
+              color:isColor==null?const Color(0xFFF37B67):Colors.white,//const Color(0xFFF37B67),
               child: Row(
                 children:  [
                   SizedBox(
@@ -141,7 +141,7 @@ class TicketView extends StatelessWidget {
              */
             Container(
               decoration:  BoxDecoration(
-                  color:isColor==null? Styles.orangeColor:Colors.white,
+                  color:isColor==null? const Color(0xFFF37B67):Colors.white,
                   borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(isColor==null?21:0),
                       bottomRight: Radius.circular(isColor==null?21:0))
               ),

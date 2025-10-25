@@ -1,3 +1,6 @@
+import '../models/flight.dart';
+import '../models/airport.dart';
+
 class Booking {
   final String id;
   final String bookingReference;
