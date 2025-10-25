@@ -9,19 +9,17 @@ A fully functional flight booking Flutter web application with a complete bookin
 - **Flight Results**: View available flights with sorting and filtering options
 - **Flight Details**: Detailed flight information with fare options and baggage rules
 - **Passenger Information**: Collect passenger details with form validation
-- **Payment Simulation**: Secure payment processing simulation
-- **Booking Confirmation**: Complete booking confirmation with itinerary
+- **Payment Simulation**: Secure payment processing simulation with both card and QR code options
+- **Booking Confirmation**: Complete booking confirmation with itinerary and QR code e-ticket
 - **Manage Bookings**: View and manage all bookings with detailed information
 - **Invoice Generation**: Download booking invoices in HTML format
 
-### UI/UX Features
-- Modern, responsive design with consistent branding
-- Custom widgets for reusable components
-- Intuitive navigation with bottom tab bar
-- Clear visual hierarchy and information organization
-- Color-coded badges for flight types (Direct, Fastest, Cheapest)
-- Spacious card layouts with rounded corners
-- Tabular number formatting for prices and times
+### Advanced Features
+- **Flight Comparison**: Compare multiple flights side-by-side to make the best choice
+- **Advanced Search**: Comprehensive search with filters for price, stops, airlines, and more
+- **Web Scraping Integration**: Real flight data fetching using SerpApi with mock data fallback
+- **Responsive Design**: Works seamlessly across all device sizes
+- **Modern UI**: Clean, intuitive interface with consistent branding
 
 ## Technology Stack
 
@@ -32,6 +30,9 @@ A fully functional flight booking Flutter web application with a complete bookin
 - **UI Components**: Custom widgets with Material Design
 - **Build & Deployment**: GitHub Actions
 - **Hosting**: GitHub Pages
+- **Payment Processing**: Paystack integration
+- **Web Scraping**: SerpApi integration
+- **QR Code Generation**: Barcode widget package
 
 ## Project Structure
 
@@ -55,7 +56,10 @@ lib/
 ### Installation
 1. Clone the repository
 2. Run `flutter pub get` to install dependencies
-3. Run `flutter run -d chrome` to start the development server
+3. Configure API keys in `lib/utils/env_config.dart`:
+   - SerpApi key for flight data
+   - Paystack keys for payment processing
+4. Run `flutter run -d chrome` to start the development server
 
 ### Building for Production
 Run `flutter build web` to generate production-ready static files in the `build/web` directory.
@@ -103,12 +107,14 @@ Each flight includes:
 
 1. **Home Screen**: Welcome screen with quick search access
 2. **Search Screen**: Flight search with origin/destination selection
-3. **Results Screen**: Flight listings with sorting and filtering
-4. **Flight Details Screen**: Detailed flight information and fare selection
-5. **Passenger Info Screen**: Passenger details collection
-6. **Payment Screen**: Payment information processing
-7. **Confirmation Screen**: Booking confirmation and invoice download
-8. **Manage Bookings Screen**: List and details of all bookings
+3. **Advanced Search Screen**: Comprehensive search with additional filters
+4. **Results Screen**: Flight listings with sorting and filtering
+5. **Flight Comparison Screen**: Compare multiple flights side-by-side
+6. **Flight Details Screen**: Detailed flight information and fare selection
+7. **Passenger Info Screen**: Passenger details collection
+8. **Payment Screen**: Payment processing with card or QR code options
+9. **Confirmation Screen**: Booking confirmation with QR e-ticket and invoice download
+10. **Manage Bookings Screen**: List and details of all bookings
 
 ## Custom Widgets
 
@@ -120,6 +126,39 @@ The app includes several custom widgets for consistent UI:
 - FlightCard: Standardized flight display component
 - PriceDisplay: Consistent price formatting
 - PassengerInfoCard: Standardized passenger information display
+
+## API Integration
+
+### SerpApi (Flight Data)
+The app integrates with SerpApi to fetch real flight data. In case the API is unavailable, it falls back to mock data.
+
+Configuration:
+1. Sign up at [SerpApi](https://serpapi.com/) to get an API key
+2. Update `serpApiKey` in `lib/utils/env_config.dart`
+
+### Paystack (Payments)
+The app uses Paystack for payment processing with both card and QR code payment options.
+
+Configuration:
+1. Sign up at [Paystack](https://paystack.com/) to get API keys
+2. Update `paystackPublicKey` and `paystackSecretKey` in `lib/utils/env_config.dart`
+
+## QR Code Features
+
+### Payment QR Codes
+Users can choose to pay via QR code scanning, which generates a scannable code for mobile banking apps.
+
+### E-Ticket QR Codes
+Each booking confirmation includes a QR code that can be scanned at airports for check-in.
+
+## Invoice Generation
+
+Users can download HTML invoices for their bookings directly from the confirmation screen. The invoices include:
+- Booking reference
+- Flight details
+- Passenger information
+- Price breakdown
+- Company branding
 
 ## Development
 
